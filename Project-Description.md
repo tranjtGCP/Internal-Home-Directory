@@ -5,5 +5,5 @@
 - Justin Tran (Computer Science)
 
 ## Topic: 
-** To Be Confirmed - Our project will focus on either a home inventory management system in which a user would scan receipts of orders / shopping trips or documents, whether they be from a brick-and-mortar store, an online order, or other various miscellaneous documents that
-indicate a change in inventory or a live-captioning device that will let a user review real-time conversation history. **
+Our project will focus on a home inventory management system in which a user could scan receipts of orders / shopping trips or documents, whether they be from a brick-and-mortar store, an online order, or other various miscellaneous documents that
+indicate a change in inventory, and have a constantly up-to-date list of their inventory,
