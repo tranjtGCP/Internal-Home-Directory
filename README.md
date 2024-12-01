@@ -4,7 +4,7 @@
 
 1. Team Names
 2. [Project Description](Rey-Justin-Senior-Design-Project/Project-Description.md)
-3. [User Stories and Design Diagrams](Rey-Justin-Senior-Design-Project/Design/Design Diagrams)
+3. User Stories and Design Diagrams
     - [User Stories](Rey-Justin-Senior-Design-Project/Design/User_Stories.md)
     - Design Diagrams
        - [Level 0](Rey-Justin-Senior-Design-Project/Design/Design_Diagrams/Design_Diagram_1.png)
