@@ -7,7 +7,7 @@
 3. User Stories and Design Diagrams
     - [User Stories](/Design/User_Stories.md)
     - Design Diagrams
-       - [Level 0](Design/Design Diagrams/Design Diagram 1.png)
+       - [Level 0](/Design/Design_Diagrams/Design_Diagram_1.png)
        - [Level 1](/Design/Design_Diagrams/Design_Diagram_2.png)
        - [Level 2](/Design/Design_Diagrams/Design_Diagram_3.png)
     - [Descriptions of Diagrams](/Design/Design_Diagrams/Design_Diagrams_Summary.pdf)
