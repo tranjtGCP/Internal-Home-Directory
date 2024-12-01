@@ -3,7 +3,7 @@
 ### Justin Tran
 
 1. Team Names
-2. Project Description
+2. [Project Description] (Rey-Justin-Senior-Design-Project/Project-Description.md)
 3. User Stories and Design Diagrams
     - User Stories
     - Design Diagrams
@@ -22,3 +22,4 @@
 10. Appendix
     - References, citations, links to code repos, meeting notes
     - Evidence of 45 hours of effort
+
