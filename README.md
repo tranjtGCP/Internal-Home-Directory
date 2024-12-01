@@ -3,7 +3,7 @@
 ### Justin Tran
 
 1. Team Names
-2. [Project Description](/Project_Management/Project-Description.md)
+2. [Project Description](/Project_Management/Project_Description.md)
 3. User Stories and Design Diagrams
     - [User Stories](/Design/User_Stories.md)
     - Design Diagrams
