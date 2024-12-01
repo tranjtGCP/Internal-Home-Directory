@@ -3,25 +3,25 @@
 ### Justin Tran
 
 1. Team Names
-2. [Project Description](Project-Description.md)
+2. [Project Description](/Project_Management/Project-Description.md)
 3. User Stories and Design Diagrams
     - [User Stories](/Design/User_Stories.md)
     - Design Diagrams
-       - [Level 0](/Design/Design%20Diagrams/Design%20Diagram_1.png)
+       - [Level 0](/Design/Design_Diagrams/Design_Diagram_1.png)
        - [Level 1](/Design/Design_Diagrams/Design_Diagram_2.png)
        - [Level 2](/Design/Design_Diagrams/Design_Diagram_3.png)
     - [Descriptions of Diagrams](/Design/Design_Diagrams/Design_Diagrams_Summary.pdf)
 5. Project Tasks and Timeline
-    - [Task List](/Tasklist.md)
-    - [Timeline / Effort Matrix](/essays/Milestones,_Timeline,_and_Effort_Matrix.pdf)
-6. [ABET Concerns](/essays/Senior_Design_Assignment_#7_-_Constraints_Essay.pdf) 
-7. [PPT Slideshow (including ABET Concerns)](/essays/Senior_Design_Slides_(1).pdf)
+    - [Task List](/Project_Management/Tasklist.md)
+    - [Timeline / Effort Matrix](/Essays/Milestones_Timeline_Effort_Matrix.pdf)
+6. [ABET Concerns](/Essays/Constraints_Essay.pdf) 
+7. [PPT Slideshow (including ABET Concerns)](/Essays/Senior_Design_Slides.pdf)
 8. Self-Assessment Essays
-    - [Rey](/essays/CS5001_Capstone_Essay.pdf)
-    - [Justin](/essays/Capstone_Assessment.pdf)
+    - [Rey](/Essays/Capstone_Essay_Rey.pdf)
+    - [Justin](/Essays/Capstone_Essay_Justin.pdf)
 10. professional Biographies
     - [Rey](/Professional_Biographies/Rey_Biography.md)
-    - [Justin](/Professional_Biographies/Justin-Tran-Professional-Biography.md)
+    - [Justin](/Professional_Biographies/Justin_Biography.md)
 12. Budget
     - Expenses to date / Statement that there have not been any:
         - There have not been any expenses to date; only time has been dedicated.
