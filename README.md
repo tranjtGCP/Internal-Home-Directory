@@ -3,7 +3,7 @@
 ### Justin Tran
 
 1. Team Names
-2. [Project Description](Rey-Justin-Senior-Design-Project/Project-Description.md)
+2. [Project Description](Project-Description.md)
 3. User Stories and Design Diagrams
     - User Stories
     - Design Diagrams
