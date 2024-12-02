@@ -19,7 +19,7 @@
 8. Self-Assessment Essays
     - [Rey](/Essays/Capstone_Essay_Rey.pdf)
     - [Justin](/Essays/Capstone_Essay_Justin.pdf)
-10. professional Biographies
+10. Professional Biographies
     - [Rey](/Professional_Biographies/Rey_Biography.md)
     - [Justin](/Professional_Biographies/Justin_Biography.md)
 12. Budget
