@@ -1,0 +1,131 @@
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+} */
+
+.top {
+  display: flex;
+  flex-direction: column;
+  height: 200vh;
+  width: 100vw;
+  text-align: left;
+  align-items: left;
+  padding-top: 5rem;
+
+  .body {
+    margin-left: 8rem;
+    margin-right: 8rem;
+    margin-top: 4rem;
+    padding: 1rem;
+    border-style: groove;
+
+    h3 {
+      display: flex;
+      margin-left: 2rem;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: right;
+    }
+  }
+
+  h1 {
+    margin: 10px;
+    width: 100%;
+  }
+
+  .itemList {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    list-style-type: none;
+  }
+
+  header {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    top: 0;
+    background-color: white;
+    color: black;
+    gap: 10px;
+
+    h2 {
+      width: max-content;
+      margin-right: auto;
+      margin-left: 1rem;
+    }
+
+    .Inventory2 {
+      display: flex;
+      margin-left: auto;
+    }
+  }
+
+  footer {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    justify-content: right;
+    margin-right: 1rem;
+    background-color: white;
+    padding: 10px;
+  }
+
+  #inventoryItem {
+    margin: 1rem;
+    padding: 1rem;
+    border-style: groove;
+    border-radius: 5px;
+  }
+
+.addButton {
+      background-color: lightgray;
+      color: gray;
+      width: max-content;
+    }
+
+}
