@@ -10,7 +10,7 @@ Here are a list of resources that the user may need.
 For now, our application currently resides in a GitHub Repo, of which you can access from the resources list link. In the future, we plan to turn the program into a launchable executable file.
 ##### Using the application
 Upon launch, the user will be greeted to a landing page. The user will be prompted to "Sign Up" and create an account or "Log In" with an existing one.
-![A screenshot of the application landing page] (./screenshots/Landing_Page.png)
+![A screenshot of the application landing page] (Rey-Justin-Senior-Design-Project/Design/User Docs/screenshots/Landing_Page.png)
 
 In either page, the user can fill out the corresponding information, and click the submit button to continue.
 ![A screenshot of the application sign up page] (/screenshots/Sign_Up_Page.png)
