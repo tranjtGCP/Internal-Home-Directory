@@ -1,6 +1,7 @@
 import databaseIO as db
 from flask import Flask
 from flask import request
+import json
 app = Flask(__name__)
 
 @app.after_request
@@ -9,6 +10,15 @@ def after_request(response):
   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
   return response
+
+
+@app.route('/get_data', methods=['GET', 'POST', 'DELETE'])
+def get_data():
+
+    if request.method == 'GET':
+        return json.dumps(db.get_data(), indent=4)
+
+    return "none"
 
 
 # @app.route('/add_item', methods=["POST"])
@@ -23,14 +33,14 @@ def item():
     if request.method == 'GET':
         if not db.isItem(data['item']):
             return "Item not in database"
-        return data['item'] + ": " + str(db.getItemCount(data['item'])) 
+        return json.dumps(data['item'] + ": " + str(db.getItemCount(data['item']))) 
 
     if request.method == 'POST':
         if(data['qty'] <= 0):
             db.removeItem(data['item'], abs(data['qty']))
         if(data['qty'] > 0):
             db.addItem(data['item'], data['qty'])
-        return data['item'] + ": " + str(db.getItemCount(data['item']))
+        return json.dumps(data['item'] + ": " + str(db.getItemCount(data['item'])))
 
     # if request.method == 'DELETE':
     #     print("deletle")

@@ -1,114 +1,79 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
 import "./App.css";
-// import Button from "@mui/material/Button";
-// import Icon from "@mui/icons-material";
 import { IconButton, Button } from "@mui/material";
 import { Add, Inventory2, AccountCircle } from "@mui/icons-material";
-// import Box from "@mui/material/Box";
-// import Drawer from "@mui/material/Drawer";
-// import Button from "@mui/material/Button";
-// import List from "@mui/material/List";
-// import Divider from "@mui/material/Divider";
-// import ListItem from "@mui/material/ListItem";
-// import ListItemButton from "@mui/material/ListItemButton";
-// import ListItemIcon from "@mui/material/ListItemIcon";
-// import ListItemText from "@mui/material/ListItemText";
-// import InboxIcon from "@mui/icons-material/MoveToInbox";
-// import MailIcon from "@mui/icons-material/Mail";
-
 import axios from 'axios';
+import React, { useMemo, useState, useLayoutEffect, debounce } from 'react';
 
-function get_data() {
-  axios.get('http://localhost:5000/get_data', "car")
+
+// useEffect(()=> {
+//   setData(get_data());
+// })
+
+// const data = {
+//   "test": 1
+// };
+
+// Test App
+const App = () => {
+  const [data, setData] = useState(()=> {empty: 0});
+
+  useLayoutEffect(() => {
+    setData(get_data())
+  }, []);
+
+  // API functions (test)
+  function get_data() {
+    console.log("get_data called")
+    axios.get('http://localhost:5000/get_data')
     .then(response => console.log(response.data))
-}
+  }
 
-// Add or remove qty of item (positive or negative integers)
-function update_item(item, qty) {
-  axios.post('http://localhost:5000/item', {'item': item, 'qty': qty})
+  // Add or remove qty of item (positive or negative integers)
+  function update_item(item, qty) {
+    axios.post('http://localhost:5000/item', {'item': item, 'qty': qty})
     .then(response => console.log(response.data))
-}
+    setData(get_data())
+  }
 
-function get_item(item) {
-  axios.get('http://localhost:5000/item', {'item': item})
-  .then(response => console.log(response.data ))
-}
-
-function App() {
-  // const [count, setCount] = useState(0)
-  //add_item({})
+  function get_item(item) {
+    axios.get('http://localhost:5000/item', {'item': item})
+    .then(response => console.log(response.data ))
+  }
   //get_data()
-  //add_item("car", 2)
-  update_item("rice", 200)
+  update_item("rice", 100)
+  //setData({"test": 1})
 
-  //add_item("car", 200)
-  //update_item("car", -10)
+  //const dataTest = {test: 1}
 
-
-  var fruits = [
-    { id: 1, name: "apple" },
-    { id: 2, name: "banana" },
-    { id: 2, name: "orange" },
-    { id: 2, name: "peach" },
-    { id: 2, name: "passion" },
-  ];
-
-  var listItems = fruits.map((fruit) => (
-    <li id="inventoryItem" key={fruit.id}>
-      {fruit.name} &nbsp;
-    </li>
-  ));
+  console.log(data.keys())
 
   return (
-    <>
-      {/* <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p> */}
-
-      <div className="top">
-        <header>
-          <h2>Internal Home Directory</h2>
-          <Inventory2 fontSize="large"></Inventory2>
-          <IconButton Button="true" variant="outline" class="addButton">
-            <AccountCircle fontSize="large"></AccountCircle>
-          </IconButton>
-        </header>
-        <div className="body">
-          <h3>Inventory 1</h3>
-          <ul className="itemList">{listItems}</ul>
-          <div className="controls">
-            <IconButton Button variant="outline" class="addButton">
-              <Add></Add>
-            </IconButton>
-          </div>
-        </div>
-        <footer>
-          <IconButton Button variant="outline" class="addButton">
-            <Add></Add>
-          </IconButton>
-        </footer>
-      </div>
-    </>
+    <body style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh'}}>
+    <div style={{display: 'flex',  flexDirection: 'column', justifyContent:'center', alignItems:'center', height: '100vh', width: '100vw'}}>
+    <h1>Items and Quantities</h1>
+      <ul>
+         {data != null && 
+         Object.entries(data).map((item, quantity) => (
+          <li key={item}>
+            {item}: {quantity}
+            <Button
+            title={"Add 1"}
+            onClick={() => update_item(item, 1)}
+            >
+            ADD  
+            </Button>
+            <Button
+            title={"Remove 1"}
+            onClick={() => update_item(item, -1)}
+            >
+            REMOVE  
+            </Button>
+          </li>
+        ))}
+      </ul>
+    </div>
+    </body>
   );
-}
+};
 
 export default App;

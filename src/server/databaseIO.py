@@ -5,6 +5,7 @@
 
 import random
 import os.path
+import json
 from sqlitedict import SqliteDict
 
 # File Data Structures
@@ -65,9 +66,11 @@ def getTotalItemCount():
     return n
 
 def get_data():
-    data = []
+    print("database get_data")
+    data = {}
     for keys in inventory:
-        data.append({keys + ": " + str(inventory[keys])})
+        data[keys] = inventory[keys]
+        print(data)
     return data
 
 # Clears entire inventory on file
