@@ -24,23 +24,30 @@
 
     .headerTitle {
       display: flex;
-      margin-right: auto;
+      margin-right: auto
     }
   }
 
   .body {
     display: flex;
     flex-direction: column;
-    height: 100%;
     padding: 1rem;
     margin-bottom: auto;
+    overflow-x: hidden;
 
     .BodyTitle {
       display: flex;
 
       h2 {
-        padding-left: 10px;
+        display: flex;
+        margin-left: 10rem;
       }
+    }
+
+    .itemList {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
     }
   }
 
