@@ -127,6 +127,6 @@ def test_add_remove():
     # Remove item that doesn't exist
     removeItem("book")
     assert database["inventory"] == {'milk': 1, 'apple': 3}
-    save_local_changes()
+    save_local_changes
     clear_inventory()
     

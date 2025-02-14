@@ -28,8 +28,43 @@ import { Input } from "@mui/material";
 
 // Test App
 const App = () => {
-  const [data, setData] = useState(() => get_data());
 
+  // API functions (test)
+  const get_data = async () => {
+    console.log("get_data called")
+    await axios.get('http://localhost:5000/get_data')
+      .then(response => {
+        console.log(response.data)
+        setData(response.data)
+        return response.data
+      })
+  }
+
+  // Add or remove qty of item (positive or negative integers)
+  const update_item = async (item, qty) => {
+    await axios.post('http://localhost:5000/item', { 'item': item, 'qty': qty })
+      .then(response => console.log(response.data))
+    get_data()
+  }
+
+  const get_item = async (item) => {
+    axios.get('http://localhost:5000/item', { 'item': item })
+      .then(response => console.log(response.data))
+  }
+
+  const save_changes = async () => {
+    await axios.post('http://localhost:5000/save_changes')
+      .then(response => { console.log(response.data) })
+  }
+
+  const clear_changes = async () => {
+    await axios.delete('http://localhost:5000/save_changes')
+      .then(response => {
+        console.log(response.data)
+      })
+  }
+
+  const [data, setData] = useState(() => get_data());
   const [inputItem, setInputItem] = useState("");
   const [inputQty, setInputQty] = useState(0);
 
@@ -43,40 +78,7 @@ const App = () => {
     get_data()
   }, []);
 
-  // API functions (test)
-  function get_data() {
-    console.log("get_data called")
-    axios.get('http://localhost:5000/get_data')
-      .then(response => {
-        console.log(response.data)
-        setData(response.data)
-        return response.data
-      })
-  }
 
-  // Add or remove qty of item (positive or negative integers)
-  function update_item(item, qty) {
-    axios.post('http://localhost:5000/item', { 'item': item, 'qty': qty })
-      .then(response => console.log(response.data))
-    get_data()
-  }
-
-  function get_item(item) {
-    axios.get('http://localhost:5000/item', { 'item': item })
-      .then(response => console.log(response.data))
-  }
-
-  function save_changes() {
-    axios.post('http://localhost:5000/save_changes')
-      .then(response => { console.log(response.data) })
-  }
-
-  function clear_changes() {
-    axios.delete('http://localhost:5000/save_changes')
-      .then(response => {
-        console.log(response.data)
-      })
-  }
 
   //update_item("rice", 10)
 
@@ -98,6 +100,11 @@ const App = () => {
               onClick={() => save_changes()}
             >
               Push Changes to File
+            </Button>
+            <Button
+              onClick={() => clear_changes()}
+            >
+              Reset Changes
             </Button>
             <form>
               <label>Enter Item:
