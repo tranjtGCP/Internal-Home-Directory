@@ -35,6 +35,9 @@
         border-radius: 1rem;
 
         .itemTitle {
+          display: flex;
+          justify-content: center;
+
           h3 {
             margin: 0;
             padding: 0;

@@ -74,10 +74,10 @@ const UserHome = () => {
   }, []);
 
   const testList = {
-    "Item 1": 1,
-    "Item 2": 2,
-    "Item 3": 10,
-    "Item 4": 100,
+    Potato: 1,
+    Onion: 2,
+    Tomato: 10,
+    Scallop: 100,
   };
 
   return (
@@ -93,7 +93,9 @@ const UserHome = () => {
             Object.entries(testList).map((item, quantity) => (
               <div key={item} className="item">
                 <div className="itemTitle">
-                  <h3>{item[0]}</h3>
+                  <h3>
+                    {item[0]} : {item[1]}
+                  </h3>
                 </div>
                 <div className="itemActions">
                   <IconButton onClick={() => update_item(item[0], 1)}>
