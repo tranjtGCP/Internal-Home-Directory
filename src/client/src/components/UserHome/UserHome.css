@@ -60,11 +60,6 @@
     padding-left: 10px;
     background-color: #efecdb;
     color: #426b1f;
-    gap: 1rem;
-
-    p {
-      color: #426b1f;
-    }
 
     a {
       border-top-style: none;

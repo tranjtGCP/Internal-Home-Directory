@@ -16,134 +16,60 @@ import "./App.css";
 import { Add, Inventory, AccountCircle } from "@mui/icons-material";
 import axios from "axios";
 import React, { useMemo, useState, useLayoutEffect, debounce } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useRoutes,
+  createBrowserRouter,
+  RouterProvider,
+  Link,
+} from "react-router-dom";
+import UserHome from "./components/UserHome/UserHome";
+import About from "./components/About/About";
 
-// useEffect(()=> {
-//   setData(get_data());
-// })
-
-// const data = {
-//   "test": 1
-// };
-
-// Test App
 const App = () => {
-  const [data, setData] = useState(() => get_data());
-
-  const [inputItem, setInputItem] = useState("");
-  const [inputQty, setInputQty] = useState(0);
-
-
-  function handleUpdate() {
-    console.log(inputItem, inputQty)
-    update_item(inputItem, inputQty)
-  }
-
-  useLayoutEffect(() => {
-    get_data();
-  }, []);
-
-  // API functions (test)
-  function get_data() {
-    console.log("get_data called");
-    axios.get("http://localhost:5000/get_data").then((response) => {
-      console.log(response.data);
-      setData(response.data);
-      return response.data;
-    });
-  }
-
-  // Add or remove qty of item (positive or negative integers)
-  function update_item(item, qty) {
-    axios
-      .post("http://localhost:5000/item", { item: item, qty: qty })
-      .then((response) => console.log(response.data));
-    get_data();
-  }
-
-  function get_item(item) {
-    axios
-      .get("http://localhost:5000/item", { item: item })
-      .then((response) => console.log(response.data));
-  }
-
-  function save_changes() {
-    axios.post("http://localhost:5000/save_changes").then((response) => {
-      console.log(response.data);
-    });
-  }
-
-  function clear_changes() {
-    axios.delete("http://localhost:5000/save_changes").then((response) => {
-      console.log(response.data);
-    });
-  }
-
-  //update_item("rice", 10)
-
-  //get_data()
-  //setData({"test": 1})
-
-  //const dataTest = {"test": 2}
-
-  //console.log(data)
-  //console.log(data.keys())
+  const routes = createBrowserRouter([
+    {
+      path: "/",
+      element: <UserHome />,
+    },
+    {
+      path: "/About",
+      element: <About />,
+    },
+  ]);
 
   return (
     <>
       <div className="top">
-        <Box className="topBox">
-          <AppBar position="sticky" className="header">
-            <Toolbar>
-              <div className="headerTitle">
-                <h3>Internal Home Directory</h3>
-              </div>
-              <IconButton color="#426B1F" aria-label="add an alarm">
-                <AccountCircleIcon />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-
-          <div className="body">
-            <div className="bodyTitle">
-              <h2>Welcome, Justin!</h2>
-            </div>
-            <div className="itemList">
-              <h2>Items and Quantities</h2>
-              <ul>
-                <Button onClick={() => save_changes()}>
-                  Push Changes to File
-                </Button>
-                {data != null &&
-                  Object.entries(data).map((item, quantity) => (
-                    <li key={item}>
-                      {item[0]}: {item[1]}
-                      <Button
-                        title={"Add 1"}
-                        onClick={() => update_item(item[0], 1)}
-                      >
-                        ADD
-                      </Button>
-                      <Button
-                        title={"Remove 1"}
-                        onClick={() => update_item(item[0], -1)}
-                      >
-                        REMOVE
-                      </Button>
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          </div>
-
-          <BottomNavigation className="footer">
-            <a
-              href="https://github.com/tranjtGCP/Internal-Home-Directory"
-              className="footer"
-            >
-              GitHub
-            </a>
-          </BottomNavigation>
-        </Box>
+        <BrowserRouter>
+          <Box className="topBox">
+            <AppBar position="sticky" className="header">
+              <Toolbar>
+                <div className="headerTitle">
+                  <Link to="/">Internal Home Directory</Link>
+                </div>
+                <IconButton color="#426B1F" aria-label="add an alarm">
+                  <AccountCircleIcon />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
+            <Routes>
+              <Route path="/" element={<UserHome />} />
+              <Route path="/About" element={<About />} />
+            </Routes>
+            <BottomNavigation className="footer">
+              <a
+                href="https://github.com/tranjtGCP/Internal-Home-Directory"
+                className="footer"
+              >
+                GitHub
+              </a>
+              <Link to="/About"><p>About</p></Link>
+            </BottomNavigation>
+          </Box>
+        </BrowserRouter>
       </div>
     </>
   );
