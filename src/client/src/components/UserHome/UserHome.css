@@ -1,4 +1,4 @@
-.body {
+.userHomeTop {
   display: flex;
   flex-direction: column;
   padding: 1rem;
@@ -14,9 +14,43 @@
     }
   }
 
-  .itemList {
+  .body {
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    
+    .itemList {
+      display: flex;
+      padding: 1rem;
+      gap: 1rem;
+      
+      .item {
+        display: flex;
+        flex-direction: column;
+        height: max-content;
+        width: max-content;
+        padding: 1rem;
+        border-style: groove;
+        border-color: #426b1f;
+        border-radius: 1rem;
+
+        .itemTitle {
+          h3 {
+            margin: 0;
+            padding: 0;
+          }
+        }
+
+        .itemActions {
+          display: flex;
+          gap: 10px;
+
+          .quantityInput {
+            display: flex;
+            max-width: 5rem;
+          }
+        }
+      }
+    }
   }
 }
