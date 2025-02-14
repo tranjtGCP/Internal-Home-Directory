@@ -19,46 +19,54 @@ import { BrowserRouter } from "react-router-dom";
 import "./UserHome.css";
 
 const UserHome = () => {
-  const [data, setData] = useState(() => get_data());
 
-  const [inputItem, setInputItem] = useState("");
-  const [inputQty, setInputQty] = useState(0);
+    // API functions (test)
+    const get_data = async () => {
+      console.log("get_data called")
+      await axios.get('http://localhost:5000/get_data')
+        .then(response => {
+          console.log(response.data)
+          setData(response.data)
+          return response.data
+        })
+    }
+  
+    // Add or remove qty of item (positive or negative integers)
+    const update_item = async (item, qty) => {
+      await axios.post('http://localhost:5000/item', { 'item': item, 'qty': qty })
+        .then(response => console.log(response.data))
+      get_data()
+    }
+  
+    const get_item = async (item) => {
+      axios.get('http://localhost:5000/item', { 'item': item })
+        .then(response => console.log(response.data))
+    }
+  
+    const save_changes = async () => {
+      await axios.post('http://localhost:5000/save_changes')
+        .then(response => { console.log(response.data) })
+    }
+  
+    const clear_changes = async () => {
+      await axios.delete('http://localhost:5000/save_changes')
+        .then(response => {
+          console.log(response.data)
+        })
+    }
 
-  function save_changes() {
-    axios.post("http://localhost:5000/save_changes").then((response) => {
-      console.log(response.data);
-    });
-  }
+    const [data, setData] = useState(() => get_data());
+    const [inputItem, setInputItem] = useState("");
+    const [inputQty, setInputQty] = useState(0);
 
-  // API functions (test)
-  function get_data() {
-    console.log("get_data called");
-    axios.get("http://localhost:5000/get_data").then((response) => {
-      console.log(response.data);
-      setData(response.data);
-      return response.data;
-    });
-  }
+    function handleUpdate() {
+      console.log(inputItem, inputQty)
+      update_item(inputItem, inputQty)
+    }
 
-  // Add or remove qty of item (positive or negative integers)
-  function update_item(item, qty) {
-    axios
-      .post("http://localhost:5000/item", { item: item, qty: qty })
-      .then((response) => console.log(response.data));
-    get_data();
-  }
-
-  function get_item(item) {
-    axios
-      .get("http://localhost:5000/item", { item: item })
-      .then((response) => console.log(response.data));
-  }
-
-  function clear_changes() {
-    axios.delete("http://localhost:5000/save_changes").then((response) => {
-      console.log(response.data);
-    });
-  }
+    useLayoutEffect(() => {
+      get_data()
+    }, []);
 
   return (
     <div className="body">
