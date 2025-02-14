@@ -10,10 +10,12 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
 import "./App.css";
 import { Add, Inventory, AccountCircle } from "@mui/icons-material";
 import axios from 'axios';
-import React, { useMemo, useState, useLayoutEffect, debounce } from 'react';
+import React, { useMemo, useEffect, useState, useLayoutEffect, debounce, TextInput, Text } from 'react';
+import { Input } from "@mui/material";
 
 
 // useEffect(()=> {
@@ -27,6 +29,15 @@ import React, { useMemo, useState, useLayoutEffect, debounce } from 'react';
 // Test App
 const App = () => {
   const [data, setData] = useState(() => get_data());
+
+  const [inputItem, setInputItem] = useState("");
+  const [inputQty, setInputQty] = useState(0);
+
+
+  function handleUpdate() {
+    console.log(inputItem, inputQty)
+    update_item(inputItem, inputQty)
+  }
 
   useLayoutEffect(() => {
     get_data()
@@ -88,6 +99,26 @@ const App = () => {
             >
               Push Changes to File
             </Button>
+            <form>
+              <label>Enter Item:
+                <input
+                  type="text"
+                  onChange={(e) => setInputItem(e.target.value)}
+                />
+              </label>
+            </form>
+            <NumberInput
+              aria-label="Demo number input"
+              placeholder="Type a number…"
+              onChange={(event, val) => setInputQty(val)}
+            />
+            <Button
+              title={"Update"}
+              onClick={() => handleUpdate()}
+              >
+              ADD NEW ITEM
+            </Button>
+
             {data != null &&
               Object.entries(data).map((item, quantity) => (
                 <li key={item}>

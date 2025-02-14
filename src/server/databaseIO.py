@@ -14,10 +14,15 @@ from sqlitedict import SqliteDict
 # Pulls the database from file, if file doesn't exist create file and set inventory to empty dict
 if os.path.isfile("data/test_data.sqlite"):
     database = SqliteDict("data/test_data.sqlite", outer_stack=True)
-    database["inventory"] = {}
+    try:
+        database["inventory"]
+    except:
+        database["inventory"] = {}
 else:
     database = SqliteDict("data/test_data.sqlite", outer_stack=True)
     database["inventory"] = {}
+
+# 'inventory' is a local copy of the saved inventory that stages changes before being commited to file
 inventory = database["inventory"]
     
 print("Data read from file.")
@@ -66,12 +71,7 @@ def getTotalItemCount():
     return n
 
 def get_data():
-    print("database get_data")
-    data = {}
-    for keys in inventory:
-        data[keys] = inventory[keys]
-        print(data)
-    return data
+    return inventory
 
 # Clears entire inventory on file
 def clear_inventory():
@@ -82,11 +82,13 @@ def clear_inventory():
 # Clears local inventory (does not delete inventory on file)
 def clear_local_changes():
     inventory = database["inventory"]
+    return "Changes Cleared"
 
 # Saves local inventory to file
 def save_local_changes():
     database["inventory"] = inventory
-    database.commit()    
+    database.commit()
+    return "Changes Saved"
 
 ### Tests
 
@@ -125,5 +127,6 @@ def test_add_remove():
     # Remove item that doesn't exist
     removeItem("book")
     assert database["inventory"] == {'milk': 1, 'apple': 3}
+    save_local_changes()
     clear_inventory()
     

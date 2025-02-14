@@ -12,7 +12,7 @@ def after_request(response):
   return response
 
 
-@app.route('/get_data', methods=['GET', 'POST', 'DELETE'])
+@app.route('/get_data', methods=['GET'])
 def get_data():
 
     if request.method == 'GET':
@@ -28,7 +28,6 @@ def item():
 
     print("get Json")
     data = request.json
-    print("item " + data["item"])
 
     if request.method == 'GET':
         if not db.isItem(data['item']):
@@ -36,16 +35,26 @@ def item():
         return json.dumps(data['item'] + ": " + str(db.getItemCount(data['item']))) 
 
     if request.method == 'POST':
-        if(data['qty'] <= 0):
+        if(data['qty'] < 0):
             db.removeItem(data['item'], abs(data['qty']))
         if(data['qty'] > 0):
             db.addItem(data['item'], data['qty'])
         return json.dumps(data['item'] + ": " + str(db.getItemCount(data['item'])))
 
     # if request.method == 'DELETE':
-    #     print("deletle")
+    #     print("delete")
     #     db.removeItem(data['item'], data['qty'])
     #     return data['item'] + ": " + str(db.getItemCount(data['item']))
+
+    return "none"
+
+@app.route('/save_changes', methods=['POST', 'DELETE'])
+def save_changes():
+
+    if request.method == 'POST':
+        return db.save_local_changes()
+    if request.method == 'DELETE':
+        return db.clear_local_changes()
 
     return "none"
 
