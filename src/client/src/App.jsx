@@ -42,23 +42,30 @@ const App = () => {
 
   return (
     <>
-      <div className="top">
+      <div className="appTop">
         <BrowserRouter>
-          <Box className="topBox">
+          <Box className="appBox">
+            {/* Header */}
             <AppBar position="sticky" className="header">
               <Toolbar>
                 <div className="headerTitle">
-                  <Link to="/">Internal Home Directory</Link>
+                  <Link to="/">
+                    <p>Internal Home Directory</p>
+                  </Link>
                 </div>
                 <IconButton color="#426B1F" aria-label="add an alarm">
                   <AccountCircleIcon />
                 </IconButton>
               </Toolbar>
             </AppBar>
+
+            {/* Body */}
             <Routes>
               <Route path="/" element={<UserHome />} />
               <Route path="/About" element={<About />} />
             </Routes>
+
+            {/* Footer */}
             <BottomNavigation className="footer">
               <a
                 href="https://github.com/tranjtGCP/Internal-Home-Directory"
@@ -66,7 +73,9 @@ const App = () => {
               >
                 GitHub
               </a>
-              <Link to="/About"><p>About</p></Link>
+              <Link to="/About">
+                <p>About</p>
+              </Link>
             </BottomNavigation>
           </Box>
         </BrowserRouter>

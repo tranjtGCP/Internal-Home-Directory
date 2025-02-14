@@ -17,19 +17,21 @@ import axios from "axios";
 import React, { useMemo, useState, useLayoutEffect, debounce } from "react";
 import { BrowserRouter } from "react-router-dom";
 import "./UserHome.css";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import TextField from "@mui/material/TextField";
 
 const UserHome = () => {
-
-    // API functions (test)
-    const get_data = async () => {
-      console.log("get_data called")
-      await axios.get('http://localhost:5000/get_data')
-        .then(response => {
-          console.log(response.data)
-          setData(response.data)
-          return response.data
-        })
-    }
+  
+  // API functions (test)
+  const get_data = async () => {
+    console.log("get_data called");
+    await axios.get("http://localhost:5000/get_data").then((response) => {
+      console.log(response.data);
+      setData(response.data);
+      return response.data;
+    });
+  };
   
     // Sets the quantity of specified item
     const set_item = async (item, qty) => {
@@ -62,18 +64,25 @@ const UserHome = () => {
         })
     }
 
-    const [data, setData] = useState(() => get_data());
-    const [inputItem, setInputItem] = useState("");
-    const [inputQty, setInputQty] = useState(0);
+  const [data, setData] = useState(() => get_data());
+  const [inputItem, setInputItem] = useState("");
+  const [inputQty, setInputQty] = useState(0);
 
-    function handleUpdate() {
-      console.log(inputItem, inputQty)
-      update_item(inputItem, inputQty)
-    }
+  function handleUpdate() {
+    console.log(inputItem, inputQty);
+    update_item(inputItem, inputQty);
+  }
 
-    useLayoutEffect(() => {
-      get_data()
-    }, []);
+  useLayoutEffect(() => {
+    get_data();
+  }, []);
+
+  const testList = {
+    Potato: 1,
+    Onion: 2,
+    Tomato: 10,
+    Scallop: 100,
+  };
 
   const testData = {
     "potato": 1,
@@ -81,30 +90,37 @@ const UserHome = () => {
   }
 
   return (
-    <div className="body">
+    <div className="userHomeTop">
       <div className="bodyTitle">
         <h2>Welcome, Justin!</h2>
       </div>
-      <div className="itemList">
+      <div className="body">
         <h2>Items and Quantities</h2>
-        <ul>
-          <Button onClick={() => save_changes()}>Push Changes to File</Button>
+        <Button onClick={() => save_changes()}>Push Changes to File</Button>
+        <div className="itemList">
           {data != null &&
-            Object.entries(data).map((item, quantity) => (
-              <li key={item}>
-                {item[0]}: {item[1]}
-                <Button title={"Add 1"} onClick={() => update_item(item[0], 1)}>
-                  ADD
-                </Button>
-                <Button
-                  title={"Remove 1"}
-                  onClick={() => get_item("potato")}
-                >
-                  REMOVE
-                </Button>
-              </li>
+            Object.entries(testList).map((item, quantity) => (
+              <div key={item} className="item">
+                <div className="itemTitle">
+                  <h3>
+                    {item[0]} : {item[1]}
+                  </h3>
+                </div>
+                <div className="itemActions">
+                  <IconButton onClick={() => update_item(item[0], 1)}>
+                    <RemoveIcon></RemoveIcon>
+                  </IconButton>
+                  <TextField
+                    className="quantityInput"
+                    defaultValue={item[1]}
+                  ></TextField>
+                  <IconButton onClick={() => update_item(item[0], -1)}>
+                    <AddIcon></AddIcon>
+                  </IconButton>
+                </div>
+              </div>
             ))}
-        </ul>
+        </div>
       </div>
     </div>
   );

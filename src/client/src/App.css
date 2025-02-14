@@ -1,4 +1,4 @@
-.top {
+.appTop {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -7,7 +7,7 @@
   overflow-x: hidden;
   overflow-y: visible;
 
-  .topBox {
+  .appBox {
     display: flex;
     overflow-x: hidden;
     overflow-y: visible;
@@ -24,30 +24,12 @@
 
     .headerTitle {
       display: flex;
-      margin-right: auto
-    }
-  }
+      margin-right: auto;
 
-  .body {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    margin-bottom: auto;
-    overflow-x: hidden;
-
-    .BodyTitle {
-      display: flex;
-
-      h2 {
-        display: flex;
-        margin-left: 10rem;
+      p {
+        color: #426b1f;
+        font-size: larger;
       }
-    }
-
-    .itemList {
-      display: flex;
-      flex-direction: column;
-      padding: 1rem;
     }
   }
 
