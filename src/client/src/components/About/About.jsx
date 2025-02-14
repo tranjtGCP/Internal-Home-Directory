@@ -28,15 +28,23 @@ import {
 
 const About = () => {
 
-    
-
   return (
     <>
-      <div className="top">  
-        <h1>beepus</h1>
+      <div className="aboutTop">
+        <div className="bodyTitle">
+          <h2>About</h2>
+          <p>
+            Welcome to Internal Home directory! This app is intended to be a
+            inventory management system with quality of life features to help
+            people reduce waste and consumption!
+          </p>
+          <h2>Contributors:</h2>
+          <p>Rey Hicks (Backend (Python) / Database (SQLite))</p>
+          <p>Justin Tran - (Frontend (React) / Database)</p>
+        </div>
       </div>
     </>
-    );
+  );
 };
 
 export default About;
