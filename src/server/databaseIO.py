@@ -29,6 +29,12 @@ print("Data read from file.")
 
 # Some basic get/set functions our database should handle
 
+def setItem(item, n):
+    print("Set \'" + item + "\' to quantity \'" + str(n) + "\'...")
+    inventory[item] = n
+    database["inventory"] = inventory
+
+
 # Adds 'n' of specified 'item' from 'data'
 def addItem(item, n=1):
     print("Add " + str(n) + " \'" + item + "\'...")

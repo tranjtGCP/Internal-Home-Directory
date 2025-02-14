@@ -31,9 +31,16 @@ const UserHome = () => {
         })
     }
   
+    // Sets the quantity of specified item
+    const set_item = async (item, qty) => {
+      await axios.post('http://localhost:5000/item', { 'item': item, 'qty': qty })
+        .then(response => console.log(response.data))
+        get_data()
+    }
+
     // Add or remove qty of item (positive or negative integers)
     const update_item = async (item, qty) => {
-      await axios.post('http://localhost:5000/item', { 'item': item, 'qty': qty })
+      await axios.put('http://localhost:5000/item', { 'item': item, 'qty': qty })
         .then(response => console.log(response.data))
       get_data()
     }
@@ -68,6 +75,11 @@ const UserHome = () => {
       get_data()
     }, []);
 
+  const testData = {
+    "potato": 1,
+    "scallop": 4
+  }
+
   return (
     <div className="body">
       <div className="bodyTitle">
@@ -86,7 +98,7 @@ const UserHome = () => {
                 </Button>
                 <Button
                   title={"Remove 1"}
-                  onClick={() => update_item(item[0], -1)}
+                  onClick={() => get_item("potato")}
                 >
                   REMOVE
                 </Button>
