@@ -51,10 +51,20 @@ def item():
 @app.route('/save_changes', methods=['POST', 'DELETE'])
 def save_changes():
 
+    data = request.json
+    print(data)
+
     if request.method == 'POST':
-        return db.save_local_changes()
-    if request.method == 'DELETE':
-        return db.clear_local_changes()
+        for keys in data:
+            db.setItem(keys, data[keys])
+            print(keys, data[keys])
+        
+
+
+    # if request.method == 'POST':
+    #     return db.save_local_changes()
+    # if request.method == 'DELETE':
+    #     return db.clear_local_changes()
 
     return "none"
 
