@@ -16,8 +16,10 @@ if os.path.isfile("data/test_data.sqlite"):
     database = SqliteDict("data/test_data.sqlite", outer_stack=True)
     try:
         database["inventory"]
+        print("Loading Inventory...")
     except:
         database["inventory"] = {}
+        print("Creating new Inventory...")
 else:
     database = SqliteDict("data/test_data.sqlite", outer_stack=True)
     database["inventory"] = {}
@@ -47,16 +49,20 @@ def addItem(item, n=1):
 # Removes 'n' of specified 'item' from 'data'
 def removeItem(item, n=1):
     print("Remove " + str(n) + " \'" + item + "\'...")
-    if isItem(item):
-        if inventory[item] >= n:
-            inventory[item] = inventory[item] - n
-            if inventory[item] == 0:
-                inventory.pop(item)
-            database["inventory"] = inventory
-        else:
-            print("Error: Cannot remove " + str(n) + " \'" + item +"\', not enough in inventory!")
-    else:
+
+    if not isItem(item):
         print("Error: Cannot remove item, \'" + item +"\' not in inventory!")
+        return 0
+
+    if not (inventory[item] >= n):
+        print("Error: Cannot remove " + str(n) + " \'" + item +"\', not enough in inventory!")
+        return 0
+
+    inventory[item] = inventory[item] - n
+    if inventory[item] == 0:
+        inventory.pop(item)
+    database["inventory"] = inventory
+    return 1
 
 # Checks if 'item' is in 'data'
 def isItem(item):
