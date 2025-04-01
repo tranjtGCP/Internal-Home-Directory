@@ -15,6 +15,8 @@ def after_request(response):
 @app.route('/get_data', methods=['GET'])
 def get_data():
 
+    data = request.json
+
     if request.method == 'GET':
         return json.dumps(db.get_data(), indent=4)
 
@@ -23,7 +25,7 @@ def get_data():
 
 # @app.route('/add_item', methods=["POST"])
 # @app.route('/remove_item', methods=["DELETE"])
-@app.route('/item', methods=['GET', 'POST', 'DELETE'])
+@app.route('/item_qty', methods=['GET', 'POST', 'DELETE'])
 def item():
 
     print("get Json")
@@ -36,9 +38,13 @@ def item():
 
     if request.method == 'POST':
         if(data['qty'] < 0):
-            db.removeItem(data['item'], abs(data['qty']))
+            if db.removeItemQty(data['item'], abs(data['qty'])):
+                db.save_to_file()
+                return "200 OK"
         if(data['qty'] > 0):
-            db.addItem(data['item'], data['qty'])
+            if db.addItemQty(data['item'], data['qty']):
+                db.save_to_file()
+                return "200 OK"
         return json.dumps(data['item'] + ": " + str(db.getItemCount(data['item'])))
 
     # if request.method == 'DELETE':
@@ -58,7 +64,8 @@ def save_changes():
         for keys in data:
             db.setItem(keys, data[keys])
             print(keys, data[keys])
-        
+        db.save_to_file()
+        return "200 OK"
 
 
     # if request.method == 'POST':
