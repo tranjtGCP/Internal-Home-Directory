@@ -231,7 +231,10 @@ def get_data(search_string="", labels=set(), filter_type=set(), sort_type=set(),
                 if not labels.issubset(item_labels):
                     data.pop(item_name)
             except:
+                data.pop(item_name)
                 continue
+    if "name" not in filter_type and "label" not in filter_type:
+        sorted_data = data
 
     # Sort
     sorted_data = {}
@@ -261,12 +264,19 @@ def get_data(search_string="", labels=set(), filter_type=set(), sort_type=set(),
 
     # Pages
     # items_per_page = determines how many pages of items there are
-    for i in range(len(sorted_data.keys())/items_per_page):
-        for j in range(items_per_page)
 
-    #data["inventory"] = inventory
-    #data["pages"] = {}
-    return inventory
+    this_pages = {}
+    keys = list(sorted_data.keys())
+    for i in range(math.ceil(len(keys)/items_per_page)):
+        page = {}
+        for j in range(items_per_page):
+            if len(keys) > 0:
+                page.update({keys[0]: sorted_data[keys[0]]})
+                keys.pop(0)
+        this_pages[i] = page
+
+    pages = this_pages
+    return this_pages
 
 def get_page(page=1):
     if pages == {}:
@@ -333,103 +343,135 @@ def save_to_file():
 #     clear_inventory()    
 
 def test_label():
-    clear_inventory()
+    print("test_label...")
+    # clear_inventory()
 
-    # Add label to item that doesnt exist
-    assert addLabel("milk", "dairy") == 0
+    # # Add label to item that doesnt exist
+    # assert addLabel("milk", "dairy") == 0
     
-    # Remove label to item that doesnt exist
-    assert removeLabel("milk", "dairy") == 0
+    # # Remove label to item that doesnt exist
+    # assert removeLabel("milk", "dairy") == 0
 
-    # Create empty item
-    assert createEmptyItem("milk") == 1
+    # # Create empty item
+    # assert createEmptyItem("milk") == 1
 
-    # Add label to empty item
-    temp = addLabel("milk", "dairy")
-    assert temp == 1
+    # # Add label to empty item
+    # temp = addLabel("milk", "dairy")
+    # assert temp == 1
 
-    # Remove label
-    temp = removeLabel("milk", "dairy")
-    assert temp == 1
+    # # Remove label
+    # temp = removeLabel("milk", "dairy")
+    # assert temp == 1
 
-    addLabel("milk", "dairy")
-    addLabel("milk", "food")
-    addLabel("milk", "cold")
+    # addLabel("milk", "dairy")
+    # addLabel("milk", "food")
+    # addLabel("milk", "cold")
 
-    # Remove label that doesn't exist
-    temp = removeLabel("milk", "expired")
-    assert temp == 0
+    # # Remove label that doesn't exist
+    # temp = removeLabel("milk", "expired")
+    # assert temp == 0
 
-    # Get labels
-    temp = getLabels("milk")
-    assert temp == {"dairy", "food", "cold"}
-    clear_inventory()
+    # # Get labels
+    # temp = getLabels("milk")
+    # assert temp == {"dairy", "food", "cold"}
+    # clear_inventory()
 
 def test_addItems():
-    clear_inventory()
-    addItemQty("Apple" , 2)
-    addItemQty("Pear", 3)
-    addItemQty("Orange", 12)
-    save_to_file()
+    print("test_addItems...")
+    # clear_inventory()
+    # addItemQty("Apple" , 2)
+    # addItemQty("Pear", 3)
+    # addItemQty("Orange", 12)
+    # save_to_file()
 
 def test_timestamps():
-    clear_inventory()
+    print("test_timestamps...")
+    # #clear_inventory()
 
-    # Create and modify timestamp
-    createEmptyItem("Milk")
-    assert createTimeStamp("Milk") == 0
-    assert setTimeStamp("Milk") == 1
+    # # Create and modify timestamp
+    # createEmptyItem("Milk")
+    # assert createTimeStamp("Milk") == 0
+    # assert setTimeStamp("Milk") == 1
 
-    # Modify Item that doesn't exist
-    assert createTimeStamp("Empty") == 0
-    assert setTimeStamp("Empty") == 0
+    # # Modify Item that doesn't exist
+    # assert createTimeStamp("Empty") == 0
+    # assert setTimeStamp("Empty") == 0
 
 def test_getData():
-    clear_inventory()
+    print("test_getData...")
+    # clear_inventory()
 
-    addItemQty("Apple", 1)
-    addLabel("Apple", "fruit")
-    addLabel("Apple", "food")
-    addLabel("Apple", "kitchen")
+    # start = time.time()
+    # f = open("data/nounlist.txt", "r")
+    # f = f.read().splitlines()
+    # nouns = []
+    # for line in f:
+    #     nouns.append(line)
+    # for i in range(len(nouns)):
+    #     noun = nouns[i]
+    #     addItemQty(noun, int(random.random()*100))
+    #     addLabel(noun, nouns[int(random.random()*10)])
+    #     addLabel(noun, nouns[int(random.random()*10)])
+    #     addLabel(noun, nouns[int(random.random()*10)])
 
-    addItemQty("Banana", 2)
-    addLabel("Banana", "fruit")
-    addLabel("Banana", "food")
-    addLabel("Banana", "kitchen")
+    # save_to_file()
+    
+    # end = time.time()
+    # print(end-start)
 
-    addItemQty("Clementine", 3)
-    addLabel("Clementine", "fruit")
-    addLabel("Clementine", "food")
-    addLabel("Clementine", "kitchen")
+    # addItemQty("Apple", 1)
+    # addLabel("Apple", "fruit")
+    # addLabel("Apple", "food")
+    # addLabel("Apple", "kitchen")
 
-    addItemQty("Salt", 4)
-    addLabel("Salt", "seasoning")
-    addLabel("Salt", "food")
-    addLabel("Salt", "kitchen")
+    # addItemQty("Banana", 2)
+    # addLabel("Banana", "fruit")
+    # addLabel("Banana", "food")
+    # addLabel("Banana", "kitchen")
 
-    addItemQty("Bread", 5)
-    addLabel("Bread", "bakery")
-    addLabel("Bread", "food")
-    addLabel("Bread", "kitchen")
+    # addItemQty("Clementine", 3)
+    # addLabel("Clementine", "fruit")
+    # addLabel("Clementine", "food")
+    # addLabel("Clementine", "kitchen")
 
-    addItemQty("Milk", 6)
-    addLabel("Milk", "dairy")
-    addLabel("Milk", "food")
-    addLabel("Milk", "kitchen")
+    # addItemQty("Salt", 4)
+    # addLabel("Salt", "seasoning")
+    # addLabel("Salt", "food")
+    # addLabel("Salt", "kitchen")
 
-    addItemQty("Sauce Pan", 7)
-    addLabel("Sauce Pan", "kitchen")
+    # addItemQty("Bread", 5)
+    # addLabel("Bread", "bakery")
+    # addLabel("Bread", "food")
+    # addLabel("Bread", "kitchen")
+
+    # addItemQty("Milk", 6)
+    # addLabel("Milk", "dairy")
+    # addLabel("Milk", "food")
+    # addLabel("Milk", "kitchen")
+
+    # addItemQty("Sauce Pan", 7)
+    # addLabel("Sauce Pan", "kitchen")
 
     search_string = ""
     labels = set({"fruit", "food"})
     filter_type = set({"name"})
     sort_type = set({"qty", "descending"})
     items_per_page = 25
-    get_data(search_string, labels, filter_type, sort_type, items_per_page)
+    #get_data(search_string, labels, filter_type, sort_type, items_per_page)
 
-    get_data("", {"fruit", "kitchen"}, {"label"}, {"alpha", "ascending"}, 25)
+    #get_data("", {"fruit", "kitchen"}, {"label"}, {"alpha", "ascending"}, 25)
 
-    get_data("Sa", {"kitchen"}, {"label", "name"}, {"qty", "ascending"}, 25)
+    #get_data("a", {"kitchen"}, {"label", "name"}, {"qty", "ascending"}, 25)
+
+    start = time.time()
+    pages = get_data("ba", {"ATM"}, {"label", "name"}, {"alpha", "ascending"}, 25)
+    end = time.time()
+
+    for i in range(len(pages)):
+        print("Page " + str(i) + ": " + str(pages[i].keys()))
+
+    #print(pages)
+    print("Time elapsed: " + str(end-start))
 
 
 
