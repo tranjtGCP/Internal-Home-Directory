@@ -12,7 +12,7 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Unstable_NumberInput as NumberInput } from "@mui/base/Unstable_NumberInput";
-import { Add, Inventory, AccountCircle, ChangeCircleSharp, FilterSharp } from "@mui/icons-material";
+import { Add, Inventory, AccountCircle, ChangeCircleSharp } from "@mui/icons-material";
 import axios from "axios";
 import React, { useMemo, useState, useLayoutEffect, debounce } from "react";
 import { BrowserRouter } from "react-router-dom";
