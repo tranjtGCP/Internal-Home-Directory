@@ -15,11 +15,43 @@ def after_request(response):
 @app.route('/get_data', methods=['GET'])
 def get_data():
 
-    data = request.json
+    print("TEST")
+    data = request.args
+
 
     if request.method == 'GET':
-        return json.dumps(db.get_data(), indent=4)
+        search_string = data['search_string']
+        print(data)
 
+        labels = set()
+        filter_type = set()
+        sort_type = set()
+
+        i = 0
+        while i>=0:
+            try:
+                labels.add(data['labels[' + str(i) + ']'])
+                print(labels)
+                i+=1
+            except:
+                i = -1
+
+        for i in range(2):
+            try:
+                filter_type.add(data['filter_type[' + str(i) + ']'])
+            except:
+                continue
+        
+        for i in range(2):
+            try:
+                sort_type.add(data['sort_type[' + str(i) + ']'])
+            except:
+                continue
+
+        items_per_page = data['items_per_page']
+
+        result = db.get_data(search_string, labels, filter_type, sort_type, int(items_per_page))
+        return json.dumps(result, indent=4)
     return "none"
 
 

@@ -12,7 +12,7 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Unstable_NumberInput as NumberInput } from "@mui/base/Unstable_NumberInput";
-import { Add, Inventory, AccountCircle, ChangeCircleSharp } from "@mui/icons-material";
+import { Add, Inventory, AccountCircle, ChangeCircleSharp, FilterSharp } from "@mui/icons-material";
 import axios from "axios";
 import React, { useMemo, useState, useLayoutEffect, debounce } from "react";
 import { BrowserRouter } from "react-router-dom";
@@ -24,9 +24,36 @@ import TextField from "@mui/material/TextField";
 const UserHome = () => {
   
   // API functions (test)
-  const get_data = async () => {
+
+  // get_data function
+
+  /*
+  Params:
+  search_string = string
+  labels = set of strings ["example1", "example2", ...]
+  filter_type = ["name", "label"] - can contain none, one, or both
+  
+  sort_type = ["name", "qty", "date_created", "last_modified" || "ascending", "descending"]
+  can contain one entry from the left and one entry from the right
+  
+  items_per_page = number (n>0)
+  */
+  const get_data = async (search_string = "", labels = [], filter_type = [], sort_type = [], items_per_page = 25) => {
     console.log("get_data called");
-    await axios.get("http://localhost:5000/get_data").then((response) => {
+
+    await axios.get("http://localhost:5000/get_data", {
+    params: {
+    'search_string': search_string, 
+    'labels': labels, 
+    'filter_type': filter_type, 
+    'sort_type': sort_type, 
+    'items_per_page': items_per_page
+      },
+    paramsSerializer: {
+      indexes: true,
+    }
+    })
+    .then((response) => {
       console.log(response.data);
       setData(response.data);
       return response.data;
@@ -67,7 +94,6 @@ const UserHome = () => {
     const update_items = async (changes) => {
       await axios.put('http://localhost:5000/item', { 'item': item, 'qty': qty })
         .then(response => console.log(response.data))
-      get_data()
     }
   
     // const get_item = async (item) => {
@@ -78,7 +104,6 @@ const UserHome = () => {
     const save_changes = async () => {
       await axios.post('http://localhost:5000/save_changes', changes)
         .then(response => { console.log(response.data) })
-      get_data();
       setChanges({}); // TODO only do this when changes confirmed
     }
   
@@ -101,7 +126,6 @@ const UserHome = () => {
   }
 
   useLayoutEffect(() => {
-    get_data();
   }, []);
 
   const testList = {
@@ -135,7 +159,7 @@ const UserHome = () => {
 
           </div>
 
-          {data != null &&
+          {false &&
             Object.entries(data).map((item, quantity) => (
               <div key={item} className="item">
                 <div className="itemTitle">
