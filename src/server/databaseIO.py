@@ -213,7 +213,7 @@ def get_data(search_string="", labels=set(), filter_type=set(), sort_type=set(),
 
     # items_per_page = determines how many items per page
 
-    print("\nget_data called (" + str(search_string) + "," + str(labels) + ", " + str(filter_type) + ", " + str(sort_type) + ", " + str(items_per_page) + ")...")
+    print("\nget_data called (" + str(search_string) + ", " + str(labels) + ", " + str(filter_type) + ", " + str(sort_type) + ", " + str(items_per_page) + ")...")
 
     data = inventory.copy()
 
@@ -233,8 +233,16 @@ def get_data(search_string="", labels=set(), filter_type=set(), sort_type=set(),
             except:
                 data.pop(item_name)
                 continue
-    if "name" not in filter_type and "label" not in filter_type:
-        sorted_data = data
+    # if "name" not in filter_type and "label" not in filter_type:
+    #     sorted_data = data
+
+    # Convert all set to list to pass as json
+    for j in data:
+        try:
+            data[j]['labels'] = list(data[j]['labels'])
+        except:
+            continue
+
 
     # Sort
     sorted_data = {}
@@ -276,6 +284,9 @@ def get_data(search_string="", labels=set(), filter_type=set(), sort_type=set(),
         this_pages[i] = page
 
     pages = this_pages
+
+    print(type(this_pages))
+
     return this_pages
 
 def get_page(page=1):
@@ -399,25 +410,6 @@ def test_timestamps():
 
 def test_getData():
     print("test_getData...")
-    # clear_inventory()
-
-    # start = time.time()
-    # f = open("data/nounlist.txt", "r")
-    # f = f.read().splitlines()
-    # nouns = []
-    # for line in f:
-    #     nouns.append(line)
-    # for i in range(len(nouns)):
-    #     noun = nouns[i]
-    #     addItemQty(noun, int(random.random()*100))
-    #     addLabel(noun, nouns[int(random.random()*10)])
-    #     addLabel(noun, nouns[int(random.random()*10)])
-    #     addLabel(noun, nouns[int(random.random()*10)])
-
-    # save_to_file()
-    
-    # end = time.time()
-    # print(end-start)
 
     # addItemQty("Apple", 1)
     # addLabel("Apple", "fruit")
@@ -473,9 +465,26 @@ def test_getData():
     #print(pages)
     print("Time elapsed: " + str(end-start))
 
-
-
-
     assert 1==2
 
+# def test_createInv():
+#     clear_inventory()
 
+#     start = time.time()
+#     f = open("data/nounlist.txt", "r")
+#     f = f.read().splitlines()
+#     nouns = []
+#     for line in f:
+#         nouns.append(line)
+#     for i in range(len(nouns)):
+#         noun = nouns[i]
+#         addItemQty(noun, int(random.random()*100))
+#         addLabel(noun, nouns[int(random.random()*10)])
+#         addLabel(noun, nouns[int(random.random()*10)])
+#         addLabel(noun, nouns[int(random.random()*10)])
+
+#     end = time.time()
+#     print("Time to create inv: " + str(end-start))
+
+#     save_to_file()
+#     assert 1==2
