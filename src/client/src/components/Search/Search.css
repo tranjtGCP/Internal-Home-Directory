@@ -1,0 +1,82 @@
+.searchTop {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    margin-bottom: auto;
+    overflow-x: hidden;
+    height: 100%;
+    width: 100%;
+
+    .bodyTitle {
+        display: flex;
+        width: 100%;
+
+        /* h2 {
+            display: flex;
+            margin-left: 10rem;
+        } */
+
+    }
+
+    .searchBody {
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        gap: 2rem;
+
+        .filtersColumn {
+            display: flex;
+            flex-direction: column;
+
+            .filterDropdown {
+                display: flex;
+                flex-direction: column;
+                width: 250px;
+
+                .filters {
+                    display: flex;
+                    flex-direction: column;
+                    margin-left: 1rem;
+                    gap: 5px;
+                    max-height: 400px;
+                    overflow-y: scroll;
+                }
+            }
+
+            .ascDesc {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+
+        .searchBodyBody {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+
+            .searchRow {
+                display: flex;
+                flex-direction: row;
+                height: max-content;
+                width: 100vw;
+                gap: 1rem;
+                align-items: center;
+            }
+
+            .items {
+                display: flex;
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+
+
+    .itemList {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+    }
+}
