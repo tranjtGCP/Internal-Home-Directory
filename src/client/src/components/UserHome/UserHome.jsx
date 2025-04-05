@@ -58,22 +58,22 @@ const UserHome = () => {
     console.log("get_data called");
 
     await axios.get("http://localhost:5000/get_data", {
-    params: {
-    'search_string': search_string, 
-    'labels': labels, 
-    'filter_type': filter_type, 
-    'sort_type': sort_type, 
-    'items_per_page': items_per_page
+      params: {
+        'search_string': search_string,
+        'labels': labels,
+        'filter_type': filter_type,
+        'sort_type': sort_type,
+        'items_per_page': items_per_page
       },
-    paramsSerializer: {
-      indexes: true,
-    }
+      paramsSerializer: {
+        indexes: true,
+      }
     })
-    .then((response) => {
-      console.log(response.data);
-      setData(response.data);
-      return response.data;
-    });
+      .then((response) => {
+        console.log(response.data);
+        setData(response.data);
+        return response.data;
+      });
   };
 
   // Sets the quantity of specified item
@@ -107,28 +107,28 @@ const UserHome = () => {
     setChanges(temp);
   }
 
-    const update_items = async (changes) => {
-      await axios.put('http://localhost:5000/item', { 'item': item, 'qty': qty })
-        .then(response => console.log(response.data))
-    }
-  
-    // const get_item = async (item) => {
-    //   axios.get('http://localhost:5000/item', { 'item': item })
-    //     .then(response => console.log(response.data))
-    // }
-  
-    const save_changes = async () => {
-      await axios.post('http://localhost:5000/save_changes', changes)
-        .then(response => { console.log(response.data) })
-      setChanges({}); // TODO only do this when changes confirmed
-    }
-  
-    // const clear_changes = async () => {
-    //   await axios.delete('http://localhost:5000/save_changes')
-    //     .then(response => {
-    //       console.log(response.data)
-    //     })
-    // }
+  const update_items = async (changes) => {
+    await axios.put('http://localhost:5000/item', { 'item': item, 'qty': qty })
+      .then(response => console.log(response.data))
+  }
+
+  // const get_item = async (item) => {
+  //   axios.get('http://localhost:5000/item', { 'item': item })
+  //     .then(response => console.log(response.data))
+  // }
+
+  const save_changes = async () => {
+    await axios.post('http://localhost:5000/save_changes', changes)
+      .then(response => { console.log(response.data) })
+    setChanges({}); // TODO only do this when changes confirmed
+  }
+
+  // const clear_changes = async () => {
+  //   await axios.delete('http://localhost:5000/save_changes')
+  //     .then(response => {
+  //       console.log(response.data)
+  //     })
+  // }
 
   const [data, setData] = useState(() => get_data()); // Data from server
   const [changes, setChanges] = useState({});  // Changes to data to be updated
@@ -183,34 +183,35 @@ const UserHome = () => {
 
             </div>
 
-          {false &&
-            Object.entries(data).map((item, quantity) => (
-              <div key={item} className="item">
-                <div className="itemTitle">
-                  <h3>
-                    {item[0]} : {item[1]}
-                  </h3>
+            {false &&
+              Object.entries(data).map((item, quantity) => (
+                <div key={item} className="item">
+                  <div className="itemTitle">
+                    <h3>
+                      {item[0]} : {item[1]}
+                    </h3>
+                  </div>
+                  <div className="itemActions">
+                    <IconButton onClick={() => update_item(item[0], -1)}>
+                      <RemoveIcon></RemoveIcon>
+                    </IconButton>
+                    <TextField
+                      type="number"
+                      className="quantityInput"
+                      inputProps={{ min: 0 }}
+                      // defaultValue={}
+                      onChange={(e) => set_item(item[0], parseInt(e.target.value))}
+                    ></TextField>
+                    <IconButton onClick={() => update_item(item[0], 1)}>
+                      <AddIcon></AddIcon>
+                    </IconButton>
+                  </div>
                 </div>
-                <div className="itemActions">
-                  <IconButton onClick={() => update_item(item[0], -1)}>
-                    <RemoveIcon></RemoveIcon>
-                  </IconButton>
-                  <TextField
-                    type="number"
-                    className="quantityInput"
-                    inputProps={{min:0}}
-                    // defaultValue={}
-                    onChange={(e)=> set_item(item[0], parseInt(e.target.value))}
-                  ></TextField>
-                  <IconButton onClick={() => update_item(item[0], 1)}>
-                    <AddIcon></AddIcon>
-                  </IconButton>
-                </div>
-              </div>
-            ))}
+              ))}
+          </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 };
 
