@@ -55,10 +55,19 @@ def get_data():
     return "none"
 
 
-# @app.route('/add_item', methods=["POST"])
-# @app.route('/remove_item', methods=["DELETE"])
-@app.route('/item_qty', methods=['GET', 'POST', 'DELETE'])
+@app.route('/item', methods=['POST', 'DELETE'])
 def item():
+    data = requst.args
+
+    if requst.method == 'POST' and db.createItem(data['item']):
+        return "200 OK"
+
+    if request.method == 'DELETE' and db.removeItem(data['item']):
+        return "200 OK"
+    return 'none'
+
+@app.route('/item_qty', methods=['GET', 'POST', 'DELETE'])
+def item_qty():
 
     print("get Json")
     data = request.json
@@ -84,7 +93,28 @@ def item():
     #     db.removeItem(data['item'], data['qty'])
     #     return data['item'] + ": " + str(db.getItemCount(data['item']))
 
+    return 'none'
+
+@app.route('/item_labels', methods=['GET', 'POST', 'DELETE'])
+def update_labels():
+    data = request.args
+
+    if not db.isItem(data['item']):
+        return "item is not in database"
+
+    if request.method == 'GET':
+        return db.getlabels(data['item'])
+
+    if request.method == 'POST' and db.addLabel(data['item'], data['label']):
+        return "200 OK"
+    
+    if request.method == 'DELETE' and db.removeLabel(data['item'], data['label']):
+        return "200 OK"
+
     return "none"
+
+
+
 
 @app.route('/save_changes', methods=['POST', 'DELETE'])
 def save_changes():

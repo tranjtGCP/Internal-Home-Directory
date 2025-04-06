@@ -34,17 +34,26 @@ print("Data read from file.")
 # IO functions
 
 
-### Generic Item
-def createEmptyItem(item):
+### Generic Item creation/deletion
+def createItem(item):
     if isItem(item):
-        print("Item already exists...")
+        print("Cannot create item: item already exists...")
         return 0
-    else:
-        inventory[item] = {}
-        createTimeStamp(item)
-        database["inventory"] = inventory
-        print("Created an empty item \'" + item + "\'")
-        return 1
+    inventory[item] = {}
+    createTimeStamp(item)
+    database["inventory"] = inventory
+    print("Created an empty item \'" + item + "\'")
+    return 1
+
+def removeItem(item):
+    if not isItem(item):
+        print("Cannot remove item: item doesn't exist...")
+        return 0
+    inventory.pop(item)
+    database["inventory"] = inventory
+    print("Removed \'" + item + "\'")
+    return 1
+
 
 ### Timestamps
 
@@ -80,7 +89,19 @@ def setTimeStamp(item):
 
 
 ### Labels
+# Returns the list of labels for a specified item
+def getLabels(item):
+    if not isItem(item):
+        print("Cannot get labels: item does not exist")
+        return 0
+    try:
+        labels = inventory[item]['labels']
+    except:
+        print("Cannot get labels: no labels found")
+        return 0
+    return labels
 
+# Adds a label to specified item
 def addLabel(item, label):
     if not isItem(item):
         print("Cannot add label: item does not exist")
@@ -100,6 +121,7 @@ def addLabel(item, label):
         print("Cannot add label: label already added")
         return 0
 
+# Removes a label from specified item
 def removeLabel(item, label):
     if not isItem(item):
         print("Cannot remove label: item does not exist")
@@ -120,17 +142,6 @@ def removeLabel(item, label):
         print("Cannot remove label: label not found")
         return 0
 
-# Returns a list of the labels for an item
-def getLabels(item):
-    if not isItem(item):
-        print("Cannot get labels: item does not exist")
-        return 0
-    try:
-        labels = inventory[item]['labels']
-    except:
-        print("Cannot get labels: no labels found")
-        return 0
-    return labels
 
 ### Quantity Based Functions
 
@@ -211,7 +222,7 @@ def get_data(search_string="", labels=set(), filter_type=set(), sort_type=set(),
     # sort_type = how to sort, takes one sort method and one sort direction 
     # {"alpha", "qty", "label", "last_modified", "date_created" || "ascending", "descending"}
 
-    # items_per_page = determines how many items per page
+    # items_per_page = determines how smany items per page
 
     print("\nget_data called (" + str(search_string) + ", " + str(labels) + ", " + str(filter_type) + ", " + str(sort_type) + ", " + str(items_per_page) + ")...")
 
@@ -364,7 +375,7 @@ def test_label():
     # assert removeLabel("milk", "dairy") == 0
 
     # # Create empty item
-    # assert createEmptyItem("milk") == 1
+    # assert createItem("milk") == 1
 
     # # Add label to empty item
     # temp = addLabel("milk", "dairy")
@@ -400,7 +411,7 @@ def test_timestamps():
     # #clear_inventory()
 
     # # Create and modify timestamp
-    # createEmptyItem("Milk")
+    # createItem("Milk")
     # assert createTimeStamp("Milk") == 0
     # assert setTimeStamp("Milk") == 1
 
