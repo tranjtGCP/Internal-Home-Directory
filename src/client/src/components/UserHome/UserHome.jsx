@@ -12,7 +12,7 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Unstable_NumberInput as NumberInput } from "@mui/base/Unstable_NumberInput";
-import { Add, Inventory, AccountCircle, ChangeCircleSharp } from "@mui/icons-material";
+import { Add, Inventory, AccountCircle, ChangeCircleSharp, AccessTimeFilled } from "@mui/icons-material";
 import axios from "axios";
 import React, { useMemo, useState, useLayoutEffect, debounce, useRef, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
@@ -23,7 +23,7 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from "react-router-dom";
 import { ThemeProvider } from "@emotion/react";
-import { createTheme } from "@mui/material";
+import { createTheme, Tooltip } from "@mui/material";
 
 const theme = createTheme({
   palette: {
@@ -177,7 +177,14 @@ const UserHome = () => {
             {data[0] != null && Object.entries(data[0]).map((item) => (
               // item[0] is the key, item[1] is value
               <div className="item">
-                <p key={item[0]}>{item[0]} {item[1]["labels"]}</p>
+                <div className="itemTitle">
+                  <h3 key={item[0]}>{item[0]} </h3>
+                  <Tooltip key={item[0]} title={item[1]["last_modified"]}>
+                    <AccessTimeFilled sx={{ fontSize: 40 }}></AccessTimeFilled>
+                  </Tooltip>
+                </div>
+                <p key={item[0]}>Quantity: {item[1]["qty"]}</p>
+                <p key={item[0]}>Labels: {item[1]["labels"]}</p>
               </div>
             ))}
           </div>
