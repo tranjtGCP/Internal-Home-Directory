@@ -14,7 +14,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Unstable_NumberInput as NumberInput } from "@mui/base/Unstable_NumberInput";
 import { Add, Inventory, AccountCircle, ChangeCircleSharp } from "@mui/icons-material";
 import axios from "axios";
-import React, { useMemo, useState, useLayoutEffect, debounce } from "react";
+import React, { useMemo, useState, useLayoutEffect, debounce, useRef, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import "./UserHome.css";
 import AddIcon from "@mui/icons-material/Add";
@@ -38,6 +38,17 @@ const theme = createTheme({
 });
 
 const UserHome = () => {
+
+  // Data from server
+  const [changes, setChanges] = useState({});  // Changes to data to be updated
+
+  const [inputItem, setInputItem] = useState("");
+  const [inputQty, setInputQty] = useState(0);
+
+  function handleUpdate() {
+    console.log(inputItem, inputQty);
+    update_item(inputItem, inputQty);
+  }
 
   // API functions (test)
 
@@ -70,11 +81,15 @@ const UserHome = () => {
       }
     })
       .then((response) => {
-        console.log(response.data);
         setData(response.data);
+        console.log(response.data);
         return response.data;
       });
   };
+
+  const [data, setData] = useState(() => get_data());
+  const [pageNum, setPageNum] = useState(0);
+
 
   // Sets the quantity of specified item
   // const set_item = async (item, qty) => {
@@ -85,7 +100,7 @@ const UserHome = () => {
 
   // Add or remove qty of item (positive or negative integers)
   const update_item = async (item, qty) => {
-    console.log(qty)
+    // console.log(qty)
     var temp = changes;
     if (item in changes) {
       temp[item] = temp[item] + qty;
@@ -130,20 +145,6 @@ const UserHome = () => {
   //     })
   // }
 
-  const [data, setData] = useState(() => get_data()); // Data from server
-  const [changes, setChanges] = useState({});  // Changes to data to be updated
-
-  const [inputItem, setInputItem] = useState("");
-  const [inputQty, setInputQty] = useState(0);
-
-  function handleUpdate() {
-    console.log(inputItem, inputQty);
-    update_item(inputItem, inputQty);
-  }
-
-  useLayoutEffect(() => {
-  }, []);
-
   const testList = {
     Potato: 1,
     Onion: 2,
@@ -171,47 +172,18 @@ const UserHome = () => {
               </IconButton>
             </Link>
           </div>
-          <Button onClick={() => save_changes()}>Save Changes</Button>
-          <div className="itemList">
-
-            <div className="item">  {/* TODO add item input*/}
-              <div className="itemtitle">
-                <h3>
-                  New Item
-                </h3>
+          <Button onClick={() => setData(get_data("ab", ["TV", "SUV"], ["name", "label"], ["alpha", "descending"], 25))}>Save changes</Button>
+          <div className="items">
+            {data[0] != null && Object.entries(data[0]).map((item) => (
+              // item[0] is the key, item[1] is value
+              <div className="item">
+                <p key={item[0]}>{item[0]} {item[1]["labels"]}</p>
               </div>
-
-            </div>
-
-            {false &&
-              Object.entries(data).map((item, quantity) => (
-                <div key={item} className="item">
-                  <div className="itemTitle">
-                    <h3>
-                      {item[0]} : {item[1]}
-                    </h3>
-                  </div>
-                  <div className="itemActions">
-                    <IconButton onClick={() => update_item(item[0], -1)}>
-                      <RemoveIcon></RemoveIcon>
-                    </IconButton>
-                    <TextField
-                      type="number"
-                      className="quantityInput"
-                      inputProps={{ min: 0 }}
-                      // defaultValue={}
-                      onChange={(e) => set_item(item[0], parseInt(e.target.value))}
-                    ></TextField>
-                    <IconButton onClick={() => update_item(item[0], 1)}>
-                      <AddIcon></AddIcon>
-                    </IconButton>
-                  </div>
-                </div>
-              ))}
+            ))}
           </div>
         </div>
       </div>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 };
 
