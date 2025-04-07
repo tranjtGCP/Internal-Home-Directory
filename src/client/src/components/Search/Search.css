@@ -10,8 +10,6 @@ body {
     margin-bottom: auto;
     overflow-x: hidden;
     height: 100%;
-    width: 100%;
-    gap: 1rem;
 
     .bodyTitle {
         display: flex;
@@ -28,8 +26,9 @@ body {
         display: flex;
         flex-direction: row;
         height: 100%;
-        gap: 2rem;
+        gap: 1rem;
         overflow-x: hidden;
+        overflow-y: hidden;
         margin-top: 10px;
 
 
@@ -37,6 +36,7 @@ body {
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            padding-top: 1rem;
 
             .filterDropdown {
                 display: flex;
@@ -66,9 +66,9 @@ body {
             flex-direction: column;
             height: 100%;
             width: 100%;
-            gap: 2rem;
+            gap: 10px;
             overflow-x: hidden;
-
+            padding: 1rem;
 
             .paginator {
                 display: flex;
@@ -79,15 +79,19 @@ body {
                 display: flex;
                 flex-direction: row;
                 height: max-content;
-                width: 100vw;
+                width: 100%;
                 gap: 1rem;
                 align-items: center;
-            }
 
-            .items {
-                display: flex;
-                height: 100%;
-                width: 100%;
+                .addItem {
+                    display: flex;
+                    margin-left: auto;
+                }
+
+                .MuiPaper-root {
+                    display: flex;
+                    padding: 1rem;
+                }
             }
 
             .items {
@@ -100,9 +104,9 @@ body {
                 border-style: solid;
                 border-radius: 20px;
                 height: 530px;
-                width: 1500px;
+                width: 96%;
 
-                .item:hover {
+                .itemTop:hover {
                     filter: brightness(0.96);
                     background-color: #6e95d4;
                     color: white;

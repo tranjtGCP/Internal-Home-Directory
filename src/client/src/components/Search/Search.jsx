@@ -49,7 +49,8 @@ import UserHome from "../UserHome/UserHome";
 import get_data from "../UserHome/UserHome";
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import Pagination from '@mui/material/Pagination';
-import IHDItem from "../Item/Item"
+import IHDItem from "../../elements/ihd-item";
+import AddIcon from '@mui/icons-material/Add';
 
 const theme = createTheme({
     palette: {
@@ -113,13 +114,12 @@ const Search = () => {
     const [ipp, setIpp] = useState(25);
 
     // Page
-    const [page, setPage] = useState(0)
-    const [open, setOpen] = useState(false);
+    const [page, setPage] = useState(0);
 
+    const [open, setOpen] = useState(false);
     const handleClickOpen = () => {
         setOpen(true);
     };
-
     const handleClose = () => {
         setOpen(false);
     };
@@ -145,11 +145,21 @@ const Search = () => {
         setDataLabels(newLabels);
     }
 
+    const handleAddSubmit = (e) => {
+        event.preventDefault();
+        console.log(nameAdd, quantityAdd, labelsAdd);
+        handleClose();
+    }
+
+    const [nameAdd, setNameAdd] = useState('');
+    const [quantityAdd, setQuantityAdd] = useState(0);
+    const [labelsAdd, setLabelsAdd] = useState([]);
+
     return (
         <ThemeProvider theme={theme}>
             <div className="searchTop">
                 <div className="bodyTitle">
-                    <h2>Search and Filter By</h2>
+                    <h2>Search, Filter, Add, and Update</h2>
                 </div>
                 <div className="searchBody">
                     <div className="filtersColumn">
@@ -201,33 +211,25 @@ const Search = () => {
                             <IconButton sx={{ bgcolor: "main.primary", borderRadius: "5px", height: "max-content", color: "main.accent" }} color="accent">
                                 <SearchIcon></SearchIcon>
                             </IconButton>
+                            <Button className="addItem" variant="contained" endIcon={<AddIcon></AddIcon>} onClick={handleClickOpen}>Add Item</Button>
+                            <Dialog onClose={handleClose} open={open} className="addItemDialog" PaperProps={{
+                                style: {
+                                    padding: "1rem", justifyContent: "left", textAlign: "left", display: "flex", flexDirection: "column"
+                                }
+                            }}>
+                                <h2 style={{ margin: "0" }}>Add Item</h2>
+                                <form style={{ display: "flex", flexDirection: "column", gap: "1rem" }} onSubmit={handleAddSubmit}>
+                                    <TextField required label="Name" variant="outlined" onChange={(e) => { setNameAdd(e.target.value) }}></TextField>
+                                    <TextField label="Quantity" variant="outlined" onChange={(e) => { setQuantityAdd(e.target.value) }}></TextField>
+                                    <TextField label="Labels" variant="outlined" onChange={(e) => { setLabelsAdd(e.target.value) }}></TextField>
+                                    <Button type="submit" variant="contained">Submit</Button>
+                                </form>
+                            </Dialog>
                         </div>
 
                         <div key={data} className="items">
                             {data[page] != null && Object.entries(data[page]).map((item) => (
-                                // item[0] is the key, item[1] is value
-                                <div className="item" id={item[0]}>
-                                    <div className="itemTitle">
-                                        <h3>{item[0]} </h3>
-                                        <Tooltip key={item[0]} title={"Last modified:" + item[1]["last_modified"]}>
-                                            <AccessTimeFilledIcon sx={{ fontSize: 40 }}></AccessTimeFilledIcon>
-                                        </Tooltip>
-                                    </div>
-                                    <p key={item[0]}>Quantity: {item[1]["qty"]}</p>
-
-                                    <p>Labels: ({item[1]["labels"].length})</p>
-                                    <div className="labels">
-                                        {item[1]["labels"] != null && Object.entries(item[1]["labels"]).map((label) => (
-                                            <p> {label[1]},</p>
-                                        ))}
-                                    </div>
-
-                                    <Button variant="contained" onClick={handleClickOpen} sx={{ style: { borderColor: "white" } }}>Edit</Button>
-
-                                    <Dialog open={open} onClose={handleClose} BackdropProps={{ style: { backgroundColor: "transparent" } }}>
-                                        <DialogTitle key={item[0]}>{item[0]}</DialogTitle>
-                                    </Dialog>
-                                </div>
+                                <div className="item" key={item[0]} is="ihd-item" name={item[0]} quantity={item[1]["qty"]} labels={item[1]["labels"]}></div>
                             ))}
                         </div>
                         <div className="paginator">
