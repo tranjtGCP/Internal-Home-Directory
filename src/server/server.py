@@ -55,9 +55,9 @@ def get_data():
 
 @app.route('/item', methods=['POST', 'DELETE'])
 def item():
-    data = requst.args
+    data = request.args
 
-    if requst.method == 'POST' and db.createItem(data['item']):
+    if request.method == 'POST' and db.createItem(data['item']):
         return "200 OK"
 
     if request.method == 'DELETE' and db.removeItem(data['item']):

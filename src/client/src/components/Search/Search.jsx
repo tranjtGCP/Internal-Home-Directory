@@ -49,6 +49,7 @@ import UserHome from "../UserHome/UserHome";
 import get_data from "../UserHome/UserHome";
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import Pagination from '@mui/material/Pagination';
+import IHDItem from "../Item/Item"
 
 const theme = createTheme({
     palette: {
@@ -92,9 +93,13 @@ const Search = () => {
             .then((response) => {
                 setDataLabels(response.data);
                 console.log(response.data);
+                setOgDataLabels(response.data);
                 return response.data;
             });
     };
+
+
+    const [ogDataLabels, setOgDataLabels] = useState({});
 
     // Data
     const [data, setData] = useState(() => get_data());
@@ -109,9 +114,6 @@ const Search = () => {
 
     // Page
     const [page, setPage] = useState(0)
-
-
-
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -136,6 +138,13 @@ const Search = () => {
         setData(get_data(name, labels, filters, sort, ipp))
     }, [name, labels, filters, sort, ipp]);
 
+    const handleSearchFilters = (e) => {
+        let asArray = Object.entries(ogDataLabels);
+        let filtered = asArray.filter(([key, value]) => key.includes(e.target.value));
+        let newLabels = Object.fromEntries(filtered);
+        setDataLabels(newLabels);
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <div className="searchTop">
@@ -149,12 +158,21 @@ const Search = () => {
                                 <Typography> Filters </Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <TextField className="filterSearchBar" />
+                                <TextField className="filterSearchBar" onKeyUp={(e) => (
+                                    handleSearchFilters(e)
+                                )} />
                             </AccordionDetails>
                             <AccordionDetails className="filters">
                                 {dataLabels != null && Object.entries(dataLabels).map((item) => (
                                     <FormControlLabel key={item[0]} label={item[0]} control={
-                                        <Checkbox />
+                                        <Checkbox onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setLabels([...labels, item[0]]);
+                                            }
+                                            else {
+                                                setLabels(labels.filter(a => a != item[0]))
+                                            }
+                                        }} />
                                     } />
                                 ))}
                             </AccordionDetails>
