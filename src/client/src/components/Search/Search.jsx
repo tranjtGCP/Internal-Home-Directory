@@ -14,7 +14,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SearchIcon from '@mui/icons-material/Search';
 import { Unstable_NumberInput as NumberInput } from "@mui/base/Unstable_NumberInput";
 import "./Search.css";
-import { Add, Inventory, AccountCircle, ArrowDownward, Check, CheckBox, BorderAllSharp } from "@mui/icons-material";
+import { Add, Inventory, AccountCircle, ArrowDownward, Check, CheckBox, BorderAllSharp, Label } from "@mui/icons-material";
 import axios from "axios";
 import React, { useMemo, useState, useLayoutEffect, debounce, useEffect } from "react";
 import {
@@ -26,7 +26,24 @@ import {
     RouterProvider,
     Link,
 } from "react-router-dom";
-import { Accordion, AccordionDetails, AccordionSummary, Checkbox, createTheme, Dialog, DialogTitle, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, Switch, TextField, Tooltip } from "@mui/material";
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Checkbox,
+    createTheme,
+    Dialog,
+    DialogTitle,
+    FormControl,
+    FormControlLabel,
+    FormGroup,
+    InputLabel,
+    MenuItem,
+    Select,
+    Switch,
+    TextField,
+    Tooltip
+} from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import UserHome from "../UserHome/UserHome";
 import get_data from "../UserHome/UserHome";
@@ -71,19 +88,13 @@ const Search = () => {
 
     const [name, setName] = useState('')
     const [labels, setLabels] = useState([])
-    const [filters, setFilters] = useState(["name"])
-    const [sort, setSort] = useState([]);
+    const [filters, setFilters] = useState(["name", "label"])
+    const [sort, setSort] = useState(["alpha", "ascending"]);
     const [ipp, setIpp] = useState(25);
-
     const [data, setData] = useState(() => get_data());
+    const [page, setPage] = useState(0)
 
-    const handleChange = (event) => {
-        setData(get_data(name, labels, ["name", "label"], sort, 25))
-    }
 
-    useEffect(() => {
-        setData(get_data(name, labels, filters, sort, ipp))
-    }, [name, labels, filters, sort, ipp]);
 
     const [open, setOpen] = useState(false);
 
@@ -96,15 +107,18 @@ const Search = () => {
     };
 
     const updateAscDesc = (event) => {
-        if (event.target.checked) {
-            setSort([document.getElementById("dropdown").value, "descending"]);
-        }
-        else {
-            setSort([document.getElementById("dropdown").value, "ascending"]);
-        }
-
-        handleChange();
+        let temp = sort;
+        temp[1] = event.target.checked ? "ascending" : "descending"
+        setSort(temp);
     }
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage - 1);
+    };
+
+    useEffect(() => {
+        setData(get_data(name, labels, filters, sort, ipp))
+    }, [name, labels, filters, sort, ipp]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -171,7 +185,7 @@ const Search = () => {
                         </Accordion>
                         <FormControl>
                             <InputLabel>Sort by</InputLabel>
-                            <Select label="Sort by" value={sort[0]} id="dropdown">
+                            <Select label="Sort by" value={sort[0]} id="dropdown" onChange={(e) => { setSort([e.target.value, sort[1]]); }}>
                                 <MenuItem value={"alpha"}>Alphabetical</MenuItem>
                                 <MenuItem value={"qty"}>Quantity</MenuItem>
                                 <MenuItem value={"date_added"}>Date added</MenuItem>
@@ -179,10 +193,11 @@ const Search = () => {
                             </Select>
                         </FormControl>
                         <div className="ascDesc">
-
                             <p>Descending</p>
                             <FormGroup>
-                                <FormControlLabel control={<Switch defaultChecked onClick={(e) => updateAscDesc(e)} value="asc" />} label="Ascending"></FormControlLabel>
+                                <FormControlLabel control={<Switch defaultChecked onClick={(e) => {
+                                    setSort([sort[0], e.target.checked ? "ascending" : "descending"]);
+                                }} />} label="Ascending"></FormControlLabel>
                             </FormGroup>
                         </div>
                     </div>
@@ -195,36 +210,34 @@ const Search = () => {
                         </div>
 
                         <div key={data} className="items">
-                            <React.Fragment>
-                                {data[0] != null && Object.entries(data[0]).map((item) => (
-                                    // item[0] is the key, item[1] is value
-                                    <div className="item" id={item[0]}>
-                                        <div className="itemTitle">
-                                            <h3 key={item[0]}>{item[0]} </h3>
-                                            <Tooltip key={item[0]} title={"Last modified:" + item[1]["last_modified"]}>
-                                                <AccessTimeFilledIcon sx={{ fontSize: 40 }}></AccessTimeFilledIcon>
-                                            </Tooltip>
-                                        </div>
-                                        <p key={item[0]}>Quantity: {item[1]["qty"]}</p>
-
-                                        <p>Labels: ({item[1]["labels"].length})</p>
-                                        <div className="labels">
-                                            {item[1]["labels"] != null && Object.entries(item[1]["labels"]).map((label) => (
-                                                <p> {label[1]},</p>
-                                            ))}
-                                        </div>
-
-                                        <Button variant="contained" onClick={handleClickOpen} sx={{ style: { borderColor: "white" } }}>Edit</Button>
-
-                                        <Dialog open={open} onClose={handleClose} BackdropProps={{ style: { backgroundColor: "transparent" } }}>
-                                            <DialogTitle key={item[0]}>{item[0]}</DialogTitle>
-                                        </Dialog>
+                            {data[page] != null && Object.entries(data[page]).map((item) => (
+                                // item[0] is the key, item[1] is value
+                                <div className="item" id={item[0]}>
+                                    <div className="itemTitle">
+                                        <h3>{item[0]} </h3>
+                                        <Tooltip key={item[0]} title={"Last modified:" + item[1]["last_modified"]}>
+                                            <AccessTimeFilledIcon sx={{ fontSize: 40 }}></AccessTimeFilledIcon>
+                                        </Tooltip>
                                     </div>
-                                ))}
-                            </React.Fragment>
+                                    <p key={item[0]}>Quantity: {item[1]["qty"]}</p>
+
+                                    <p>Labels: ({item[1]["labels"].length})</p>
+                                    <div className="labels">
+                                        {item[1]["labels"] != null && Object.entries(item[1]["labels"]).map((label) => (
+                                            <p> {label[1]},</p>
+                                        ))}
+                                    </div>
+
+                                    <Button variant="contained" onClick={handleClickOpen} sx={{ style: { borderColor: "white" } }}>Edit</Button>
+
+                                    <Dialog open={open} onClose={handleClose} BackdropProps={{ style: { backgroundColor: "transparent" } }}>
+                                        <DialogTitle key={item[0]}>{item[0]}</DialogTitle>
+                                    </Dialog>
+                                </div>
+                            ))}
                         </div>
                         <div className="paginator">
-                            <Pagination count={Object.keys(data).length} />
+                            <Pagination count={Object.keys(data).length} onChange={handleChangePage} />
                         </div>
                     </div>
                 </div>

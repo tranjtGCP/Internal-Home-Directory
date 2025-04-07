@@ -171,8 +171,8 @@ const UserHome = () => {
                 <SearchIcon></SearchIcon>
               </IconButton>
             </Link>
+            <Button variant="contained" onClick={() => setData(get_data("ab", ["TV", "SUV"], ["name", "label"], ["alpha", "descending"], 25))}>Test function</Button>
           </div>
-          <Button onClick={() => setData(get_data("ab", ["TV", "SUV"], ["name", "label"], ["alpha", "descending"], 25))}>Save changes</Button>
           <div className="items">
             {data[0] != null && Object.entries(data[0]).map((item) => (
               // item[0] is the key, item[1] is value

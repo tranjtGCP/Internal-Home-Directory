@@ -30,6 +30,7 @@ body {
         height: 100%;
         gap: 2rem;
         overflow-x: hidden;
+        margin-top: 10px;
 
 
         .filtersColumn {
