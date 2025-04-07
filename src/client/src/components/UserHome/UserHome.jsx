@@ -28,8 +28,8 @@ import { createTheme, Tooltip } from "@mui/material";
 const theme = createTheme({
   palette: {
     main: {
-      accent: "#426b1f",
-      primary: "#efecdb"
+      accent: "white",
+      primary: "#2c589e"
     }
   },
   shape: {

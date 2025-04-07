@@ -1,20 +1,26 @@
+body {
+    overflow-x: hidden;
+
+}
+
 .searchTop {
     display: flex;
     flex-direction: column;
-    padding: 2rem;
+    padding: 1rem;
     margin-bottom: auto;
     overflow-x: hidden;
     height: 100%;
     width: 100%;
+    gap: 1rem;
 
     .bodyTitle {
         display: flex;
         width: 100%;
 
-        /* h2 {
+        h2 {
             display: flex;
-            margin-left: 10rem;
-        } */
+            margin: 0;
+        }
 
     }
 
@@ -23,10 +29,13 @@
         flex-direction: row;
         height: 100%;
         gap: 2rem;
+        overflow-x: hidden;
+
 
         .filtersColumn {
             display: flex;
             flex-direction: column;
+            gap: 1rem;
 
             .filterDropdown {
                 display: flex;
@@ -55,7 +64,15 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            width: 100%;
             gap: 2rem;
+            overflow-x: hidden;
+
+
+            .paginator {
+                display: flex;
+                justify-content: center;
+            }
 
             .searchRow {
                 display: flex;
@@ -84,15 +101,32 @@
                 height: 530px;
                 width: 1500px;
 
+                .item:hover {
+                    filter: brightness(0.96);
+                    background-color: #6e95d4;
+                    color: white;
+                    /* box-shadow: 5px 5px 5px white; */
+                }
+
                 .item {
                     display: flex;
                     flex-direction: column;
-                    height: 150px;
-                    width: 163px;
+                    height: 200px;
+                    width: 240px;
+                    text-wrap: wrap;
                     padding: 1rem;
                     border-style: groove;
                     border-color: #426b1f;
                     border-radius: 1rem;
+                    justify-content: space-around;
+                    background-color: white;
+                    transition: 0.3s;
+
+                    .labels {
+                        display: flex;
+                        flex-direction: column;
+                        overflow-y: scroll;
+                    }
 
                     .itemTitle {
                         display: flex;
@@ -122,12 +156,5 @@
                 }
             }
         }
-    }
-
-
-    .itemList {
-        display: flex;
-        flex-direction: column;
-        padding: 1rem;
     }
 }

@@ -3,7 +3,7 @@
   flex-direction: column;
   min-height: 100vh;
   width: 100vw;
-  color: #426b1f;
+  color: #2c589e;
   overflow-x: hidden;
   overflow-y: visible;
 
@@ -19,15 +19,15 @@
 
   .header {
     display: flex;
-    color: #426b1f;
-    background-color: #efecdb;
+    color: #2c589e;
+    background-color: #2c589e;
 
     .headerTitle {
       display: flex;
       margin-right: auto;
 
       p {
-        color: #426b1f;
+        color: white;
         font-size: larger;
       }
     }
@@ -35,17 +35,17 @@
 
   .footer {
     display: flex;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
-    border-top: #efecdb;
+    border-top: #2c589e;
     border-top-style: groove;
     padding-left: 10px;
-    background-color: #efecdb;
-    color: #426b1f;
+    background-color: #2c589e;
+    color: white;
     gap: 1rem;
 
     p {
-      color: #426b1f;
+      color: white;
     }
 
     a {
