@@ -34,17 +34,26 @@ print("Data read from file.")
 # IO functions
 
 
-### Generic Item
-def createEmptyItem(item):
+### Generic Item creation/deletion
+def createItem(item):
     if isItem(item):
-        print("Item already exists...")
+        print("Cannot create item: item already exists...")
         return 0
-    else:
-        inventory[item] = {}
-        createTimeStamp(item)
-        database["inventory"] = inventory
-        print("Created an empty item \'" + item + "\'")
-        return 1
+    inventory[item] = {}
+    createTimeStamp(item)
+    database["inventory"] = inventory
+    print("Created an empty item \'" + item + "\'")
+    return 1
+
+def removeItem(item):
+    if not isItem(item):
+        print("Cannot remove item: item doesn't exist...")
+        return 0
+    inventory.pop(item)
+    database["inventory"] = inventory
+    print("Removed \'" + item + "\'")
+    return 1
+
 
 ### Timestamps
 
@@ -61,7 +70,6 @@ def createTimeStamp(item):
         return 0
     except:
         curr = getCurrentTime()
-        print(curr)
         inventory[item]['date_created'] = curr
         inventory[item]['last_modified'] = curr
         database["inventory"] = inventory
@@ -75,12 +83,42 @@ def setTimeStamp(item):
     curr = getCurrentTime()
     inventory[item]['last_modified'] = curr
     database["inventory"] = inventory
-    print(curr)
     return 1
 
 
 ### Labels
+# Returns the list of all labels curently being used
+def getAllLabels():
+    data = inventory.copy()
+    labels = {}
 
+    for item in data:
+        try:
+            item_labels = data[item]['labels']
+            for label in item_labels:
+                try:
+                    labels[label] = labels[label] + 1
+                except:
+                    labels[label] = 1
+        except:
+            continue
+
+    sorted_labels = dict(sorted(labels.items(), key=lambda item: item[1], reverse=True))
+    return sorted_labels
+
+# Returns the list of labels for a specified item
+def getLabels(item):
+    if not isItem(item):
+        print("Cannot get labels: item does not exist")
+        return 0
+    try:
+        labels = inventory[item]['labels']
+    except:
+        print("Cannot get labels: no labels found")
+        return 0
+    return labels
+
+# Adds a label to specified item
 def addLabel(item, label):
     if not isItem(item):
         print("Cannot add label: item does not exist")
@@ -100,6 +138,7 @@ def addLabel(item, label):
         print("Cannot add label: label already added")
         return 0
 
+# Removes a label from specified item
 def removeLabel(item, label):
     if not isItem(item):
         print("Cannot remove label: item does not exist")
@@ -120,17 +159,6 @@ def removeLabel(item, label):
         print("Cannot remove label: label not found")
         return 0
 
-# Returns a list of the labels for an item
-def getLabels(item):
-    if not isItem(item):
-        print("Cannot get labels: item does not exist")
-        return 0
-    try:
-        labels = inventory[item]['labels']
-    except:
-        print("Cannot get labels: no labels found")
-        return 0
-    return labels
 
 ### Quantity Based Functions
 
@@ -211,7 +239,7 @@ def get_data(search_string="", labels=set(), filter_type=set(), sort_type=set(),
     # sort_type = how to sort, takes one sort method and one sort direction 
     # {"alpha", "qty", "label", "last_modified", "date_created" || "ascending", "descending"}
 
-    # items_per_page = determines how many items per page
+    # items_per_page = determines how smany items per page
 
     print("\nget_data called (" + str(search_string) + ", " + str(labels) + ", " + str(filter_type) + ", " + str(sort_type) + ", " + str(items_per_page) + ")...")
 
@@ -268,8 +296,6 @@ def get_data(search_string="", labels=set(), filter_type=set(), sort_type=set(),
     for i in sorted_keys:
         sorted_data[i] = data[i]
 
-    #print(sorted_data)
-
     # Pages
     # items_per_page = determines how many pages of items there are
 
@@ -284,8 +310,6 @@ def get_data(search_string="", labels=set(), filter_type=set(), sort_type=set(),
         this_pages[i] = page
 
     pages = this_pages
-
-    print(type(this_pages))
 
     return this_pages
 
@@ -364,7 +388,7 @@ def test_label():
     # assert removeLabel("milk", "dairy") == 0
 
     # # Create empty item
-    # assert createEmptyItem("milk") == 1
+    # assert createItem("milk") == 1
 
     # # Add label to empty item
     # temp = addLabel("milk", "dairy")
@@ -400,7 +424,7 @@ def test_timestamps():
     # #clear_inventory()
 
     # # Create and modify timestamp
-    # createEmptyItem("Milk")
+    # createItem("Milk")
     # assert createTimeStamp("Milk") == 0
     # assert setTimeStamp("Milk") == 1
 
@@ -488,3 +512,7 @@ def test_getData():
 
 #     save_to_file()
 #     assert 1==2
+
+def test_getLabels():
+    print(getAllLabels())
+    assert 1==2
