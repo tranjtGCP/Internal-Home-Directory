@@ -86,12 +86,28 @@ const Search = () => {
             });
     };
 
+    const get_labels = async () => {
+        console.log("get_labels called");
+        await axios.get("http://localhost:5000/labels")
+            .then((response) => {
+                setDataLabels(response.data);
+                console.log(response.data);
+                return response.data;
+            });
+    };
+
+    // Data
+    const [data, setData] = useState(() => get_data());
+    const [dataLabels, setDataLabels] = useState(() => get_labels());
+
+    // Search Params
     const [name, setName] = useState('')
     const [labels, setLabels] = useState([])
     const [filters, setFilters] = useState(["name", "label"])
     const [sort, setSort] = useState(["alpha", "ascending"]);
     const [ipp, setIpp] = useState(25);
-    const [data, setData] = useState(() => get_data());
+
+    // Page
     const [page, setPage] = useState(0)
 
 
@@ -136,51 +152,11 @@ const Search = () => {
                                 <TextField className="filterSearchBar" />
                             </AccordionDetails>
                             <AccordionDetails className="filters">
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
-                                <FormControlLabel label="Example filter" control={
-                                    <Checkbox />
-                                } />
+                                {dataLabels != null && Object.entries(dataLabels).map((item) => (
+                                    <FormControlLabel key={item[0]} label={item[0]} control={
+                                        <Checkbox />
+                                    } />
+                                ))}
                             </AccordionDetails>
                         </Accordion>
                         <FormControl>

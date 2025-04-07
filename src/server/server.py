@@ -15,13 +15,11 @@ def after_request(response):
 @app.route('/get_data', methods=['GET'])
 def get_data():
 
-    print("TEST")
     data = request.args
 
 
     if request.method == 'GET':
         search_string = data['search_string']
-        print(data)
 
         labels = set()
         filter_type = set()
@@ -31,7 +29,6 @@ def get_data():
         while i>=0:
             try:
                 labels.add(data['labels[' + str(i) + ']'])
-                print(labels)
                 i+=1
             except:
                 i = -1
@@ -52,6 +49,7 @@ def get_data():
 
         result = db.get_data(search_string, labels, filter_type, sort_type, int(items_per_page))
         return json.dumps(result, indent=4)
+
     return "none"
 
 
@@ -69,7 +67,6 @@ def item():
 @app.route('/item_qty', methods=['GET', 'POST', 'DELETE'])
 def item_qty():
 
-    print("get Json")
     data = request.json
 
     if request.method == 'GET':
@@ -88,11 +85,14 @@ def item_qty():
                 return "200 OK"
         return json.dumps(data['item'] + ": " + str(db.getItemCount(data['item'])))
 
-    # if request.method == 'DELETE':
-    #     print("delete")
-    #     db.removeItem(data['item'], data['qty'])
-    #     return data['item'] + ": " + str(db.getItemCount(data['item']))
+    return 'none'
 
+@app.route('/labels', methods=['GET'])
+def labels():
+    data = request.args
+
+    if request.method == 'GET':
+        return json.dumps(db.getAllLabels(), indent=4)
     return 'none'
 
 @app.route('/item_labels', methods=['GET', 'POST', 'DELETE'])
@@ -120,12 +120,10 @@ def update_labels():
 def save_changes():
 
     data = request.json
-    print(data)
 
     if request.method == 'POST':
         for keys in data:
             db.setItem(keys, data[keys])
-            print(keys, data[keys])
         db.save_to_file()
         return "200 OK"
 

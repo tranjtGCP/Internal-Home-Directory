@@ -70,7 +70,6 @@ def createTimeStamp(item):
         return 0
     except:
         curr = getCurrentTime()
-        print(curr)
         inventory[item]['date_created'] = curr
         inventory[item]['last_modified'] = curr
         database["inventory"] = inventory
@@ -84,11 +83,29 @@ def setTimeStamp(item):
     curr = getCurrentTime()
     inventory[item]['last_modified'] = curr
     database["inventory"] = inventory
-    print(curr)
     return 1
 
 
 ### Labels
+# Returns the list of all labels curently being used
+def getAllLabels():
+    data = inventory.copy()
+    labels = {}
+
+    for item in data:
+        try:
+            item_labels = data[item]['labels']
+            for label in item_labels:
+                try:
+                    labels[label] = labels[label] + 1
+                except:
+                    labels[label] = 1
+        except:
+            continue
+
+    sorted_labels = dict(sorted(labels.items(), key=lambda item: item[1], reverse=True))
+    return sorted_labels
+
 # Returns the list of labels for a specified item
 def getLabels(item):
     if not isItem(item):
@@ -279,8 +296,6 @@ def get_data(search_string="", labels=set(), filter_type=set(), sort_type=set(),
     for i in sorted_keys:
         sorted_data[i] = data[i]
 
-    #print(sorted_data)
-
     # Pages
     # items_per_page = determines how many pages of items there are
 
@@ -295,8 +310,6 @@ def get_data(search_string="", labels=set(), filter_type=set(), sort_type=set(),
         this_pages[i] = page
 
     pages = this_pages
-
-    print(type(this_pages))
 
     return this_pages
 
@@ -499,3 +512,7 @@ def test_getData():
 
 #     save_to_file()
 #     assert 1==2
+
+def test_getLabels():
+    print(getAllLabels())
+    assert 1==2
