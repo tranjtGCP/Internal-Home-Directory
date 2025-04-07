@@ -12,17 +12,44 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Unstable_NumberInput as NumberInput } from "@mui/base/Unstable_NumberInput";
-import { Add, Inventory, AccountCircle, ChangeCircleSharp } from "@mui/icons-material";
+import { Add, Inventory, AccountCircle, ChangeCircleSharp, AccessTimeFilled } from "@mui/icons-material";
 import axios from "axios";
-import React, { useMemo, useState, useLayoutEffect, debounce } from "react";
+import React, { useMemo, useState, useLayoutEffect, debounce, useRef, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import "./UserHome.css";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import TextField from "@mui/material/TextField";
+import SearchIcon from '@mui/icons-material/Search';
+import { Link } from "react-router-dom";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme, Tooltip } from "@mui/material";
+
+const theme = createTheme({
+  palette: {
+    main: {
+      accent: "white",
+      primary: "#2c589e"
+    }
+  },
+  shape: {
+    borderRadius: "5px"
+  }
+});
 
 const UserHome = () => {
-  
+
+  // Data from server
+  const [changes, setChanges] = useState({});  // Changes to data to be updated
+
+  const [inputItem, setInputItem] = useState("");
+  const [inputQty, setInputQty] = useState(0);
+
+  function handleUpdate() {
+    console.log(inputItem, inputQty);
+    update_item(inputItem, inputQty);
+  }
+
   // API functions (test)
 
   // get_data function
@@ -42,91 +69,81 @@ const UserHome = () => {
     console.log("get_data called");
 
     await axios.get("http://localhost:5000/get_data", {
-    params: {
-    'search_string': search_string, 
-    'labels': labels, 
-    'filter_type': filter_type, 
-    'sort_type': sort_type, 
-    'items_per_page': items_per_page
+      params: {
+        'search_string': search_string,
+        'labels': labels,
+        'filter_type': filter_type,
+        'sort_type': sort_type,
+        'items_per_page': items_per_page
       },
-    paramsSerializer: {
-      indexes: true,
-    }
+      paramsSerializer: {
+        indexes: true,
+      }
     })
-    .then((response) => {
-      console.log(response.data);
-      setData(response.data);
-      return response.data;
-    });
+      .then((response) => {
+        setData(response.data);
+        console.log(response.data);
+        return response.data;
+      });
   };
-  
-    // Sets the quantity of specified item
-    // const set_item = async (item, qty) => {
-    //   await axios.post('http://localhost:5000/item', { 'item': item, 'qty': qty })
-    //     .then(response => console.log(response.data))
-    //     get_data()
-    // }
 
-    // Add or remove qty of item (positive or negative integers)
-    const update_item = async (item, qty) => {
-      console.log(qty)
-      var temp = changes;
-      if(item in changes) {
-        temp[item] = temp[item]+qty;
-      }
-      else if(item in data) {
-        temp[item] = data[item]+qty;
-      }
-      else {
-        temp[item] = qty;
-      }
-      console.log(temp)
-      setChanges(temp);
+  const [data, setData] = useState(() => get_data());
+  const [pageNum, setPageNum] = useState(0);
+
+
+  // Sets the quantity of specified item
+  // const set_item = async (item, qty) => {
+  //   await axios.post('http://localhost:5000/item', { 'item': item, 'qty': qty })
+  //     .then(response => console.log(response.data))
+  //     get_data()
+  // }
+
+  // Add or remove qty of item (positive or negative integers)
+  const update_item = async (item, qty) => {
+    // console.log(qty)
+    var temp = changes;
+    if (item in changes) {
+      temp[item] = temp[item] + qty;
     }
-
-    // Set qty of item
-    const set_item = async (item, qty) => {
-      var temp = changes;
+    else if (item in data) {
+      temp[item] = data[item] + qty;
+    }
+    else {
       temp[item] = qty;
-      setChanges(temp);
     }
-
-    const update_items = async (changes) => {
-      await axios.put('http://localhost:5000/item', { 'item': item, 'qty': qty })
-        .then(response => console.log(response.data))
-    }
-  
-    // const get_item = async (item) => {
-    //   axios.get('http://localhost:5000/item', { 'item': item })
-    //     .then(response => console.log(response.data))
-    // }
-  
-    const save_changes = async () => {
-      await axios.post('http://localhost:5000/save_changes', changes)
-        .then(response => { console.log(response.data) })
-      setChanges({}); // TODO only do this when changes confirmed
-    }
-  
-    // const clear_changes = async () => {
-    //   await axios.delete('http://localhost:5000/save_changes')
-    //     .then(response => {
-    //       console.log(response.data)
-    //     })
-    // }
-
-  const [data, setData] = useState(() => get_data()); // Data from server
-  const [changes, setChanges] = useState({});  // Changes to data to be updated
-
-  const [inputItem, setInputItem] = useState("");
-  const [inputQty, setInputQty] = useState(0);
-
-  function handleUpdate() {
-    console.log(inputItem, inputQty);
-    update_item(inputItem, inputQty);
+    console.log(temp)
+    setChanges(temp);
   }
 
-  useLayoutEffect(() => {
-  }, []);
+  // Set qty of item
+  const set_item = async (item, qty) => {
+    var temp = changes;
+    temp[item] = qty;
+    setChanges(temp);
+  }
+
+  const update_items = async (changes) => {
+    await axios.put('http://localhost:5000/item', { 'item': item, 'qty': qty })
+      .then(response => console.log(response.data))
+  }
+
+  // const get_item = async (item) => {
+  //   axios.get('http://localhost:5000/item', { 'item': item })
+  //     .then(response => console.log(response.data))
+  // }
+
+  const save_changes = async () => {
+    await axios.post('http://localhost:5000/save_changes', changes)
+      .then(response => { console.log(response.data) })
+    setChanges({}); // TODO only do this when changes confirmed
+  }
+
+  // const clear_changes = async () => {
+  //   await axios.delete('http://localhost:5000/save_changes')
+  //     .then(response => {
+  //       console.log(response.data)
+  //     })
+  // }
 
   const testList = {
     Potato: 1,
@@ -141,52 +158,39 @@ const UserHome = () => {
   }
 
   return (
-    <div className="userHomeTop">
-      <div className="bodyTitle">
-        <h2>Welcome, Justin!</h2>
-      </div>
-      <div className="body">
-        <h2>Items and Quantities</h2>
-        <Button onClick={() => save_changes()}>Save Changes</Button>
-        <div className="itemList">
-
-          <div className="item">  {/* TODO add item input*/}
-            <div className="itemtitle">
-              <h3>
-              New Item
-              </h3>
-            </div>
-
+    <ThemeProvider theme={theme}>
+      <div className="userHomeTop">
+        <div className="bodyTitle">
+          <h2>Welcome, Justin!</h2>
+        </div>
+        <div className="body">
+          <div className="bodyHeader">
+            <h2>Items and Quantities</h2>
+            <Link to="/Search">
+              <IconButton sx={{ bgcolor: "main.primary", borderRadius: "5px", height: "max-content", color: "main.accent" }} color="accent">
+                <SearchIcon></SearchIcon>
+              </IconButton>
+            </Link>
+            <Button variant="contained" onClick={() => setData(get_data("ab", ["TV", "SUV"], ["name", "label"], ["alpha", "descending"], 25))}>Test function</Button>
           </div>
-
-          {false &&
-            Object.entries(data).map((item, quantity) => (
-              <div key={item} className="item">
+          <div className="items">
+            {data[0] != null && Object.entries(data[0]).map((item) => (
+              // item[0] is the key, item[1] is value
+              <div className="item">
                 <div className="itemTitle">
-                  <h3>
-                    {item[0]} : {item[1]}
-                  </h3>
+                  <h3 key={item[0]}>{item[0]} </h3>
+                  <Tooltip key={item[0]} title={item[1]["last_modified"]}>
+                    <AccessTimeFilled sx={{ fontSize: 40 }}></AccessTimeFilled>
+                  </Tooltip>
                 </div>
-                <div className="itemActions">
-                  <IconButton onClick={() => update_item(item[0], -1)}>
-                    <RemoveIcon></RemoveIcon>
-                  </IconButton>
-                  <TextField
-                    type="number"
-                    className="quantityInput"
-                    inputProps={{min:0}}
-                    // defaultValue={}
-                    onChange={(e)=> set_item(item[0], parseInt(e.target.value))}
-                  ></TextField>
-                  <IconButton onClick={() => update_item(item[0], 1)}>
-                    <AddIcon></AddIcon>
-                  </IconButton>
-                </div>
+                <p key={item[0]}>Quantity: {item[1]["qty"]}</p>
+                <p key={item[0]}>Labels: {item[1]["labels"]}</p>
               </div>
             ))}
+          </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider >
   );
 };
 
