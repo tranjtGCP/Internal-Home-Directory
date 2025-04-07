@@ -54,6 +54,28 @@ def removeItem(item):
     print("Removed \'" + item + "\'")
     return 1
 
+# Sets changes for an item
+def updateItem(item, changes):
+    print("Updating item...")
+
+    try:
+        print(item + " updated qty to " + str(changes['qty']))
+        setItem(item, changes['qty'])
+    except:
+        print("Quantity not modified")
+
+    try:
+        labels = changes['labels']
+        print(labels)
+        if "" in labels:
+            setLabels(item, [])
+        else:
+            setLabels(item, labels)
+    except:
+        print("Label not modified")
+
+    database["inventory"] = inventory
+    return 1
 
 ### Timestamps
 
@@ -117,6 +139,17 @@ def getLabels(item):
         print("Cannot get labels: no labels found")
         return 0
     return labels
+
+# Set labels of an item
+def setLabels(item, labels):
+    if not isItem(item):
+        print("Cannot add label: item does not exist")
+        return 0
+    inventory[item]['labels'] = set()
+    for label in labels:
+        addLabel(item, label)
+    return 1
+
 
 # Adds a label to specified item
 def addLabel(item, label):
