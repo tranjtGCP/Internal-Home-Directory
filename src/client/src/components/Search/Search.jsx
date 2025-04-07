@@ -49,8 +49,6 @@ import UserHome from "../UserHome/UserHome";
 import get_data from "../UserHome/UserHome";
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import Pagination from '@mui/material/Pagination';
-import IHDItem from "../../elements/ihd-item";
-import AddIcon from '@mui/icons-material/Add';
 
 const theme = createTheme({
     palette: {

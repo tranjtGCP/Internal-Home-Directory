@@ -17,6 +17,7 @@ def get_data():
 
     data = request.args
 
+    print(data)
 
     if request.method == 'GET':
         search_string = data['search_string']
@@ -89,7 +90,6 @@ def item_qty():
 
 @app.route('/labels', methods=['GET'])
 def labels():
-    data = request.args
 
     if request.method == 'GET':
         return json.dumps(db.getAllLabels(), indent=4)
@@ -116,16 +116,36 @@ def update_labels():
 
 
 
-@app.route('/save_changes', methods=['POST', 'DELETE'])
+@app.route('/save_changes', methods=['GET', 'POST', 'DELETE'])
 def save_changes():
 
-    data = request.json
+    data = request.args
 
-    if request.method == 'POST':
-        for keys in data:
-            db.setItem(keys, data[keys])
-        db.save_to_file()
-        return "200 OK"
+    if request.method == 'GET':
+
+        changes = {}
+
+        # Put labels in a set
+        labels = set()
+        i = 0
+        while i>=0:
+            try:
+                labels.add(data['labels[' + str(i) + ']'])
+                i+=1
+            except:
+                i = -1
+        if len(labels) != 0:
+            changes['labels'] = labels
+
+        try:
+            qty = data['qty']
+            changes['qty'] = qty
+        except:
+            print("Qty not updated")
+
+        if db.updateItem(data['item'], changes):
+            db.save_to_file()
+            return "200 OK"
 
 
     # if request.method == 'POST':

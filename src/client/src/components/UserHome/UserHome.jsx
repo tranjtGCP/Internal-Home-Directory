@@ -40,7 +40,7 @@ const theme = createTheme({
 const UserHome = () => {
 
   // Data from server
-  const [changes, setChanges] = useState({});  // Changes to data to be updated
+  const [changes, setChanges] = useState({}) // Changes to data to be updated
 
   const [inputItem, setInputItem] = useState("");
   const [inputQty, setInputQty] = useState(0);
@@ -90,26 +90,15 @@ const UserHome = () => {
   const [data, setData] = useState(() => get_data());
   const [pageNum, setPageNum] = useState(0);
 
-
-  // Sets the quantity of specified item
-  // const set_item = async (item, qty) => {
-  //   await axios.post('http://localhost:5000/item', { 'item': item, 'qty': qty })
-  //     .then(response => console.log(response.data))
-  //     get_data()
-  // }
-
   // Add or remove qty of item (positive or negative integers)
   const update_item = async (item, qty) => {
     // console.log(qty)
     var temp = changes;
     if (item in changes) {
-      temp[item] = temp[item] + qty;
-    }
-    else if (item in data) {
-      temp[item] = data[item] + qty;
+      temp[item]['qty'] = temp[item]['qty'] + qty;
     }
     else {
-      temp[item] = qty;
+      temp[item]['qty'] = qty;
     }
     console.log(temp)
     setChanges(temp);
@@ -122,39 +111,20 @@ const UserHome = () => {
     setChanges(temp);
   }
 
-  const update_items = async (changes) => {
-    await axios.put('http://localhost:5000/item', { 'item': item, 'qty': qty })
-      .then(response => console.log(response.data))
-  }
-
-  // const get_item = async (item) => {
-  //   axios.get('http://localhost:5000/item', { 'item': item })
-  //     .then(response => console.log(response.data))
-  // }
-
   const save_changes = async () => {
-    await axios.post('http://localhost:5000/save_changes', changes)
-      .then(response => { console.log(response.data) })
-    setChanges({}); // TODO only do this when changes confirmed
+    await axios.get('http://localhost:5000/save_changes', {
+    params: {
+      'item': changes['item'],
+      'qty': changes['qty'],
+      'labels': changes['labels'],
+  },
+  paramsSerializer: {
+    indexes: true,
   }
-
-  // const clear_changes = async () => {
-  //   await axios.delete('http://localhost:5000/save_changes')
-  //     .then(response => {
-  //       console.log(response.data)
-  //     })
-  // }
-
-  const testList = {
-    Potato: 1,
-    Onion: 2,
-    Tomato: 10,
-    Scallop: 100,
-  };
-
-  const testData = {
-    "potato": 1,
-    "scallop": 4
+  })
+    .then(response => { console.log(response.data) })
+    setChanges({}); // TODO only do this when changes confirmed
+    get_data()
   }
 
   return (
@@ -171,7 +141,7 @@ const UserHome = () => {
                 <SearchIcon></SearchIcon>
               </IconButton>
             </Link>
-            <Button variant="contained" onClick={() => setData(get_data("ab", ["TV", "SUV"], ["name", "label"], ["alpha", "descending"], 25))}>Test function</Button>
+            <Button variant="contained" onClick={() => save_changes()}>Test function</Button>
           </div>
           <div className="items">
             {data[0] != null && Object.entries(data[0]).map((item) => (
