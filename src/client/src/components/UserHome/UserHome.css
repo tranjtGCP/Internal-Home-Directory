@@ -37,50 +37,72 @@
       }
     }
 
-    .items {
+    .categories {
       display: flex;
-      flex-wrap: wrap;
-      padding: 2rem;
+      flex-direction: column;
       gap: 1rem;
-      overflow-y: scroll;
-      resize: both;
-      border-style: solid;
-      border-radius: 20px;
-      height: 550px;
 
-      .item {
+      .items {
         display: flex;
         flex-direction: column;
-        height: 150px;
-        width: 163px;
+        flex-wrap: no-wrap;
         padding: 1rem;
-        border-style: groove;
-        border-color: #426b1f;
-        border-radius: 1rem;
+        gap: 10px;
+        overflow-x: scroll;
+        resize: both;
+        border-style: solid;
+        border-radius: 20px;
+        height: 250px;
 
-        .itemTitle {
-          display: flex;
-          gap: 2rem;
-          justify-content: space-around;
-
-          h3,
-          p {
-            margin: 0;
-            padding: 0;
-          }
-        }
-
-        p {
+        h2 {
           margin: 0;
         }
 
-        .itemActions {
-          display: flex;
-          gap: 10px;
+        .listName {
+          height: max-content;
+        }
 
-          .quantityInput {
+        .itemRow {
+          display: flex;
+          gap: 1rem;
+        }
+
+        .item {
+          display: flex;
+          flex-direction: column;
+          height: 150px;
+          min-width: 200px;
+          padding: 1rem;
+          border-style: groove;
+          border-color: #426b1f;
+          border-radius: 1rem;
+
+          .itemTitle {
             display: flex;
-            max-width: 5rem;
+            gap: 2rem;
+            justify-content: space-around;
+
+            h3,
+            p,
+            u {
+              margin: 0;
+              padding: 0;
+            }
+          }
+
+          p,
+          h2 {
+            margin: 0;
+          }
+
+          .itemActions {
+            display: flex;
+            gap: 10px;
+
+            .quantityInput {
+              display: flex;
+              max-width: 5rem;
+            }
           }
         }
       }

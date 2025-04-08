@@ -1,0 +1,111 @@
+.userHomeTop {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    margin-bottom: auto;
+    overflow-x: hidden;
+    height: 100%;
+  
+    .BodyTitle {
+      display: flex;
+  
+      h2 {
+        display: flex;
+        margin: 0;
+      }
+    }
+  
+    .body {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      height: 100%;
+      gap: 1rem;
+  
+      .bodyHeader {
+        display: flex;
+        gap: 1rem;
+        height: max-content;
+        align-items: center;
+  
+        h2 {
+          margin: 0;
+        }
+  
+        .SearchIcon {
+          height: max-content;
+        }
+      }
+  
+      .categories {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+  
+        .items {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: no-wrap;
+          padding: 1rem;
+          gap: 10px;
+          overflow-x: scroll;
+          resize: both;
+          border-style: solid;
+          border-radius: 20px;
+          height: 250px;
+  
+          h2 {
+            margin: 0;
+          }
+  
+          .listName {
+            height: max-content;
+          }
+  
+          .itemRow {
+            display: flex;
+            gap: 1rem;
+          }
+  
+          .item {
+            display: flex;
+            flex-direction: column;
+            height: 150px;
+            min-width: 200px;
+            padding: 1rem;
+            border-style: groove;
+            border-color: #426b1f;
+            border-radius: 1rem;
+  
+            .itemTitle {
+              display: flex;
+              gap: 2rem;
+              justify-content: space-around;
+  
+              h3,
+              p,
+              u {
+                margin: 0;
+                padding: 0;
+              }
+            }
+  
+            p,
+            h2 {
+              margin: 0;
+            }
+  
+            .itemActions {
+              display: flex;
+              gap: 10px;
+  
+              .quantityInput {
+                display: flex;
+                max-width: 5rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
