@@ -58,6 +58,9 @@ def removeItem(item):
 def updateItem(item, changes):
     print("Updating item...")
 
+    if not isItem(item):
+        createItem(item)
+
     try:
         print(item + " updated qty to " + str(changes['qty']))
         setItem(item, changes['qty'])
@@ -259,7 +262,7 @@ pages = {}
 
 
 def get_value(item, sort):
-    return item[1][sort]
+    return str(item[1][sort])
 
 
 # Gets a subset of the inventory based on some flags

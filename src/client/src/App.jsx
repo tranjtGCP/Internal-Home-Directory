@@ -28,6 +28,7 @@ import {
 import UserHome from "./components/UserHome/UserHome";
 import About from "./components/About/About";
 import Search from "./components/Search/Search";
+import Randomize from "./components/Randomize/Randomize";
 import GitHubIcon from '@mui/icons-material/GitHub';
 import InfoIcon from '@mui/icons-material/Info';
 
@@ -69,6 +70,7 @@ const App = () => {
               <Route path="/" element={<UserHome />} />
               <Route path="/About" element={<About />} />
               <Route path="/Search" element={<Search />} />
+              <Route path="/randomize" element={<Randomize />} />
             </Routes>
 
             {/* Footer */}
