@@ -183,15 +183,15 @@ const UserHome = () => {
     <ThemeProvider theme={theme}>
       <div className="userHomeTop">
         <div className="bodyTitle">
-          <h2>Home</h2>
+          <h1>Home</h1>
         </div>
         <div className="body">
           <div className="bodyHeader">
             <h2>Search</h2>
             <Link to="/Search">
-              <IconButton sx={{ bgcolor: "main.primary", borderRadius: "5px", height: "max-content", color: "main.accent" }} color="accent">
+              <Button sx={{ bgcolor: "main.primary", borderRadius: "5px", height: "max-content", color: "main.accent" }} color="accent">
                 <SearchIcon></SearchIcon>
-              </IconButton>
+              </Button>
             </Link>
             <Link to="/randomize">
               <Button variant="contained" onClick={() => {}}>I'm Feeling lucky!</Button>

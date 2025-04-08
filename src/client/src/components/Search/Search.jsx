@@ -232,7 +232,7 @@ const Search = () => {
         <ThemeProvider theme={theme}>
             <div className="searchTop">
                 <div className="bodyTitle">
-                    <h2>Search, Filter, Add, and Update</h2>
+                    <h1>Item Search</h1>
                 </div>
                 <div className="searchBody">
                     <div className="filtersColumn">
@@ -344,9 +344,6 @@ const Search = () => {
                                             <p> {label[1]}</p>
                                         ))}
                                     </div>
-                                    <Dialog open={open} onClose={handleClose} BackdropProps={{ style: { backgroundColor: "transparent" } }}>
-                                        <DialogTitle key={item[0]}>{item[0]}</DialogTitle>
-                                    </Dialog>
                                 </div>
                             ))}
                         </div>
