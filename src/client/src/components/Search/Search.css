@@ -88,9 +88,18 @@ body {
                     margin-left: auto;
                 }
 
+                .removeItem {
+                    display: flex;
+                    background-color: #f04a37;
+                }
+
                 .MuiPaper-root {
                     display: flex;
                     padding: 1rem;
+                }
+
+                .removeSubmit {
+                    background-color: #f04a37;
                 }
             }
 

@@ -63,7 +63,7 @@ class IHDItem extends HTMLDivElement {
         shadow.appendChild(itemTopDiv);
 
         // Name
-        const itemName = document.createElement("h3");
+        const itemName = document.createElement("h1");
         const itemNameText = this.getAttribute("name");
         itemName.textContent = itemNameText;
         itemTopDiv.appendChild(itemName);
@@ -85,6 +85,10 @@ class IHDItem extends HTMLDivElement {
             itemLabel.textContent = arrayFromLabels[i] + ",";
             itemLabelsDiv.appendChild(itemLabel);
         }
+
+        // Date added
+        const itemDateAdded = document.createElement("p");
+        itemTopDiv
 
         // Dialog
         const dialog = document.createElement("dialog");
@@ -130,34 +134,26 @@ class IHDItem extends HTMLDivElement {
         inputsDiv.appendChild(dialogLabels);
 
         // Close button
-        const closeButton = document.createElement("Button");
-        closeButton.textContent = "close";
-        const buttonsDiv = document.createElement("div");
-        buttonsDiv.setAttribute("class", "dialogButtons");
-        buttonsDiv.appendChild(closeButton);
-        dialogDiv.appendChild(buttonsDiv);
-        closeButton.addEventListener("click", () => {
-            dialog.close();
-        });
+        // const closeButton = document.createElement("Button");
+        // closeButton.textContent = "close";
+        // const buttonsDiv = document.createElement("div");
+        // buttonsDiv.setAttribute("class", "dialogButtons");
+        // buttonsDiv.appendChild(closeButton);
+        // dialogDiv.appendChild(buttonsDiv);
+        // closeButton.addEventListener("click", () => {
+        //     dialog.close();
+        // });
 
         // Save button
-        const saveButton = document.createElement("button");
-        saveButton.textContent = "save";
-        buttonsDiv.appendChild(saveButton);
-        saveButton.addEventListener("click", () => {
-            let labelsStr = document.getElementById("dialogLabelsInput");
-            let labelsArr = labelsStr.split(", ");
-        });
+        // const saveButton = document.createElement("button");
+        // saveButton.textContent = "save";
+        // buttonsDiv.appendChild(saveButton);
+        // saveButton.addEventListener("click", () => {
+        //     let labelsStr = document.getElementById("dialogLabelsInput");
+        //     let labelsArr = labelsStr.split(", ");
+        // });
 
         itemTopDiv.appendChild(dialog);
-
-        // MUI button please work I am begging you
-        const button = document.createElement("button");
-        button.textContent = "Edit";
-        button.addEventListener("click", () => {
-            dialog.showModal();
-        })
-        itemTopDiv.appendChild(button);
 
         // Styling
         const style = document.createElement("style");
@@ -183,7 +179,7 @@ class IHDItem extends HTMLDivElement {
                 background-color: white;
                 transition: 0.3s;
 
-                h3,
+                h1,
                     p {
                         margin: 0;
                     }

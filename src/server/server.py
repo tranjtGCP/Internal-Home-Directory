@@ -60,7 +60,7 @@ def item():
 
     if request.method == 'POST' and db.createItem(data['item']):
         return "200 OK"
-
+    print(data['item'])
     if request.method == 'DELETE' and db.removeItem(data['item']):
         return "200 OK"
     return 'none'

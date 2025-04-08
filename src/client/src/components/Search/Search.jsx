@@ -14,7 +14,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SearchIcon from '@mui/icons-material/Search';
 import { Unstable_NumberInput as NumberInput } from "@mui/base/Unstable_NumberInput";
 import "./Search.css";
-import { Add, Inventory, AccountCircle, ArrowDownward, Check, CheckBox, BorderAllSharp, Label } from "@mui/icons-material";
+import { Add, Inventory, AccountCircle, ArrowDownward, Check, CheckBox, BorderAllSharp, Label, Edit } from "@mui/icons-material";
 import axios from "axios";
 import React, { useMemo, useState, useLayoutEffect, debounce, useEffect } from "react";
 import {
@@ -50,7 +50,9 @@ import get_data from "../UserHome/UserHome";
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import Pagination from '@mui/material/Pagination';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import IHDItem from "../../elements/ihd-item";
+import EditIcon from '@mui/icons-material/Edit';
 
 const theme = createTheme({
     palette: {
@@ -112,7 +114,12 @@ const Search = () => {
     };
 
     const delete_item = async (item) => {
-        await axios.delete('http://localhost:5000/item', { 'item': item })
+        await axios.delete('http://localhost:5000/item',
+            {
+                params: {
+                    'item': item,
+                }
+            })
             .then(response => {
                 setData(get_data(name, labels, filters, sort, ipp))
                 get_labels();
@@ -137,12 +144,22 @@ const Search = () => {
     // Page
     const [page, setPage] = useState(0);
 
+    // Add / Edit dialog
     const [open, setOpen] = useState(false);
     const handleClickOpen = () => {
         setOpen(true);
     };
     const handleClose = () => {
         setOpen(false);
+    };
+
+    // Remove dialog
+    const [openRemove, setOpenRemove] = useState(false);
+    const handleClickOpenRemove = () => {
+        setOpenRemove(true);
+    };
+    const handleCloseRemove = () => {
+        setOpenRemove(false);
     };
 
     const updateAscDesc = (event) => {
@@ -170,6 +187,12 @@ const Search = () => {
         event.preventDefault();
         await save_changes();
         handleClose();
+    }
+
+    const handleRemoveSubmit = async (e) => {
+        event.preventDefault();
+        await delete_item(itemToRemove);
+        handleCloseRemove();
     }
 
     // const [nameAdd, setNameAdd] = useState('');
@@ -200,6 +223,8 @@ const Search = () => {
     // }, [name])
 
     const [changes, setChanges] = useState({});
+
+    const [itemToRemove, setItemToRemove] = useState("");
 
     // const [labelsAddArr, setLabelsAddArr] = useState([]);
 
@@ -259,19 +284,20 @@ const Search = () => {
                             <IconButton sx={{ bgcolor: "main.primary", borderRadius: "5px", height: "max-content", color: "main.accent" }} color="accent">
                                 <SearchIcon></SearchIcon>
                             </IconButton>
-                            <Button className="addItem" variant="contained" endIcon={<AddIcon></AddIcon>} onClick={handleClickOpen}>Add Item</Button>
+                            <Button className="addItem" variant="contained" startIcon={<AddIcon></AddIcon>} endIcon={<EditIcon></EditIcon>} onClick={handleClickOpen}>Add / Edit Item</Button>
+                            <Button className="removeItem" variant="contained" endIcon={<DeleteIcon></DeleteIcon>} onClick={handleClickOpenRemove} sx={{ style: { backgroundColor: "red" } }}>Remove Item</Button>
                             <Dialog onClose={handleClose} open={open} className="addItemDialog" PaperProps={{
                                 style: {
                                     padding: "1rem", justifyContent: "left", textAlign: "left", display: "flex", flexDirection: "column"
                                 }
                             }}>
-                                <h2 style={{ margin: "0" }}>Add Item</h2>
+                                <h2 style={{ margin: "0" }}>Add / Edit Item</h2>
                                 <form style={{ display: "flex", flexDirection: "column", gap: "1rem" }} onSubmit={handleAddSubmit}>
                                     <TextField required label="Name" variant="outlined" onChange={(e) => {
                                         let temp = changes;
                                         temp['item'] = e.target.value;
                                         setChanges(temp);
-                                    }}></TextField>
+                                    }} helperText="Enter existing item name to edit"></TextField>
                                     <TextField label="Quantity" variant="outlined" onChange={(e) => {
                                         let temp = changes;
                                         temp['qty'] = e.target.value;
@@ -285,6 +311,20 @@ const Search = () => {
                                     }}>
                                     </TextField>
                                     <Button type="submit" variant="contained">Submit</Button>
+                                </form>
+                            </Dialog>
+
+                            <Dialog onClose={handleCloseRemove} open={openRemove} className="removeItemDialog" PaperProps={{
+                                style: {
+                                    padding: "1rem", justifyContent: "left", textAlign: "left", display: "flex", flexDirection: "column"
+                                }
+                            }}>
+                                <h2 style={{ margin: "0" }}>Remove Item</h2>
+                                <form style={{ display: "flex", flexDirection: "column", gap: "1rem" }} onSubmit={handleRemoveSubmit}>
+                                    <TextField required label="Name" variant="outlined" onChange={(e) => {
+                                        setItemToRemove(e.target.value);
+                                    }} helperText="Enter name of item to remove"></TextField>
+                                    <Button type="submit" variant="contained" className="removeSubmit" sx={{ style: { backgroundColor: "#f04a37" } }}>Submit</Button>
                                 </form>
                             </Dialog>
                         </div>
