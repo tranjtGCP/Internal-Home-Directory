@@ -331,7 +331,28 @@ const Search = () => {
 
                         <div key={data} className="items">
                             {data[page] != null && Object.entries(data[page]).map((item) => (
-                                <div className="item" key={item[0]} is="ihd-item" name={item[0]} quantity={item[1]["qty"]} labels={item[1]["labels"]}></div>
+                                <div className="item" id={item[0]}>
+                                    <div className="itemTitle">
+                                        <h3>{item[0]} </h3>
+                                        <Tooltip key={item[0]} title={"Last modified:" + item[1]["last_modified"]}>
+                                            <AccessTimeFilledIcon sx={{ fontSize: 40 }}></AccessTimeFilledIcon>
+                                        </Tooltip>
+                                    </div>
+                                    <p key={item[0]}>Quantity: {item[1]["qty"]}</p>
+
+                                    <p>Labels: ({item[1]["labels"].length})</p>
+                                    <div className="labels">
+                                        {item[1]["labels"] != null && Object.entries(item[1]["labels"]).map((label) => (
+                                            <p> {label[1]},</p>
+                                        ))}
+                                    </div>
+
+                                    <Button variant="contained" onClick={handleClickOpen} sx={{ style: { borderColor: "white" } }}>Edit</Button>
+
+                                    <Dialog open={open} onClose={handleClose} BackdropProps={{ style: { backgroundColor: "transparent" } }}>
+                                        <DialogTitle key={item[0]}>{item[0]}</DialogTitle>
+                                    </Dialog>
+                                </div>
                             ))}
                         </div>
                         <div className="paginator">
