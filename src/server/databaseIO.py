@@ -57,7 +57,8 @@ def removeItem(item):
 # Sets changes for an item
 def updateItem(item, changes):
     print("Updating item...")
-
+    if not isItem(item):
+        createItem(item)
     try:
         print(item + " updated qty to " + str(changes['qty']))
         setItem(item, changes['qty'])
@@ -66,7 +67,7 @@ def updateItem(item, changes):
 
     try:
         labels = changes['labels']
-        print(labels)
+        print("EMPTY STRING FOUND")
         if "" in labels:
             setLabels(item, [])
         else:
@@ -279,12 +280,12 @@ def get_data(search_string="", labels=set(), filter_type=set(), sort_type=set(),
     data = inventory.copy()
 
     # Filter
-    if "name" in filter_type:
+    if search_string != "":
         print("Filter by \'name\'")
         for item_name in list(data):
             if search_string not in item_name:
                 data.pop(item_name)
-    if "label" in filter_type:
+    if len(labels) != 0:
         print("Filter by \'label\'")
         for item_name in list(data):
             try:
@@ -294,8 +295,6 @@ def get_data(search_string="", labels=set(), filter_type=set(), sort_type=set(),
             except:
                 data.pop(item_name)
                 continue
-    # if "name" not in filter_type and "label" not in filter_type:
-    #     sorted_data = data
 
     # Convert all set to list to pass as json
     for j in data:

@@ -49,6 +49,8 @@ import UserHome from "../UserHome/UserHome";
 import get_data from "../UserHome/UserHome";
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import Pagination from '@mui/material/Pagination';
+import AddIcon from '@mui/icons-material/Add';
+import IHDItem from "../../elements/ihd-item";
 
 const theme = createTheme({
     palette: {
@@ -81,22 +83,43 @@ const Search = () => {
         })
             .then((response) => {
                 setData(response.data);
-                console.log(response.data);
+                // console.log(response.data);
                 return response.data;
             });
     };
+
+    const save_changes = async () => {
+        await axios.get('http://localhost:5000/save_changes', {
+            params: changes,
+            paramsSerializer: {
+                indexes: true,
+            }
+        })
+            .then(response => {
+                setData(get_data(name, labels, filters, sort, ipp));
+                get_labels();
+            });
+    }
 
     const get_labels = async () => {
         console.log("get_labels called");
         await axios.get("http://localhost:5000/labels")
             .then((response) => {
                 setDataLabels(response.data);
-                console.log(response.data);
                 setOgDataLabels(response.data);
                 return response.data;
             });
     };
 
+    const delete_item = async (item) => {
+        await axios.delete('http://localhost:5000/item', { 'item': item })
+            .then(response => {
+                setData(get_data(name, labels, filters, sort, ipp))
+                get_labels();
+                return response.data;
+            });
+
+    }
 
     const [ogDataLabels, setOgDataLabels] = useState({});
 
@@ -143,15 +166,42 @@ const Search = () => {
         setDataLabels(newLabels);
     }
 
-    const handleAddSubmit = (e) => {
+    const handleAddSubmit = async (e) => {
         event.preventDefault();
-        console.log(nameAdd, quantityAdd, labelsAdd);
+        await save_changes();
         handleClose();
     }
 
-    const [nameAdd, setNameAdd] = useState('');
-    const [quantityAdd, setQuantityAdd] = useState(0);
-    const [labelsAdd, setLabelsAdd] = useState([]);
+    // const [nameAdd, setNameAdd] = useState('');
+    // const [quantityAdd, setQuantityAdd] = useState(0);
+    // const [labelsAdd, setLabelsAdd] = useState([]);
+
+    // useEffect(() => {
+    //     let temp = sort;
+
+    //     if (labels.length > 0) {
+    //         temp[1] = "label";
+    //     } else {
+    //         temp[1] = ""
+    //     }
+    //     setSort(temp)
+
+
+    // }, [labels])
+
+    // useEffect(() => {
+    //     let temp = sort;
+    //     if (name) {
+    //         temp[0] = "name";
+    //     } else {
+    //         temp[1] = ""
+    //     }
+    //     setSort(temp)
+    // }, [name])
+
+    const [changes, setChanges] = useState({});
+
+    // const [labelsAddArr, setLabelsAddArr] = useState([]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -217,9 +267,23 @@ const Search = () => {
                             }}>
                                 <h2 style={{ margin: "0" }}>Add Item</h2>
                                 <form style={{ display: "flex", flexDirection: "column", gap: "1rem" }} onSubmit={handleAddSubmit}>
-                                    <TextField required label="Name" variant="outlined" onChange={(e) => { setNameAdd(e.target.value) }}></TextField>
-                                    <TextField label="Quantity" variant="outlined" onChange={(e) => { setQuantityAdd(e.target.value) }}></TextField>
-                                    <TextField label="Labels" variant="outlined" onChange={(e) => { setLabelsAdd(e.target.value) }}></TextField>
+                                    <TextField required label="Name" variant="outlined" onChange={(e) => {
+                                        let temp = changes;
+                                        temp['item'] = e.target.value;
+                                        setChanges(temp);
+                                    }}></TextField>
+                                    <TextField label="Quantity" variant="outlined" onChange={(e) => {
+                                        let temp = changes;
+                                        temp['qty'] = e.target.value;
+                                        setChanges(temp);
+                                    }}></TextField>
+                                    <TextField label="Labels" variant="outlined" defaultValue={""} onChange={(e) => {
+                                        let labels = e.target.value ? e.target.value.split(", ") : [""];
+                                        let temp = changes;
+                                        temp['labels'] = labels;
+                                        setChanges(temp);
+                                    }}>
+                                    </TextField>
                                     <Button type="submit" variant="contained">Submit</Button>
                                 </form>
                             </Dialog>

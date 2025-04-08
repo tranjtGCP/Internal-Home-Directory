@@ -79,7 +79,7 @@ class IHDItem extends HTMLDivElement {
         itemLabelsDiv.setAttribute("class", "labels");
         itemTopDiv.appendChild(itemLabelsDiv);
         const labels = this.getAttribute("labels");
-        const arrayFromLabels = labels.split(",");
+        const arrayFromLabels = labels ? labels.split(",") : "";
         for (let i = 0; i < arrayFromLabels.length; i++) {
             let itemLabel = document.createElement("p");
             itemLabel.textContent = arrayFromLabels[i] + ",";
@@ -228,8 +228,6 @@ class IHDItem extends HTMLDivElement {
         `;
 
         shadow.appendChild(style);
-        console.log(style.isConnected);
-
     }
 
     disconnectedCallback() {
@@ -238,11 +236,11 @@ class IHDItem extends HTMLDivElement {
     adoptedCallback() {
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
-        console.log(
-            `Attribute ${name} has changed from ${oldValue} to ${newValue}.`,
-        );
-    }
+    // attributeChangedCallback(name, oldValue, newValue) {
+    //     console.log(
+    //         `Attribute ${name} has changed from ${oldValue} to ${newValue}.`,
+    //     );
+    // }
 }
 
 export default IHDItem;
