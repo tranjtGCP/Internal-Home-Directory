@@ -17,22 +17,22 @@ Dependencies:
 `sudo apt install nodejs npm`
 To run the client, navigate to the 'client' folder inside 'src' and run through react:
 `cd src/client/src`
+`npm i --legacy-peer-deps`
 `npm run dev`
 
 #### Server
 Dependencies:
 - python 3.10
 - flask
+- SQLite
 - pytest (optional)
-`sudo apt install python`
+`sudo apt install python sqlite3`
 `pip install flask pytest`
-To run the server, navigate to the 'server' folder inside 'src' and execute 'api.py':
-`python src/server/api.py`
+To run the server, navigate to the 'server' folder inside 'src' and execute 'server.py':
+`python src/server/server.py`
 
 
 ##### Using the application
-Our application is still in development, the following instructions will be based on wireframe diagrams.
-
 Upon launch, the user will be greeted to a landing page. The user will be prompted to "Sign Up" and create an account or "Log In" with an existing one.
 ![image](https://github.com/user-attachments/assets/d5103995-dd47-4582-aef1-e4ac3426c2f1)
 
