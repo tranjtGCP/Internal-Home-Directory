@@ -9,8 +9,8 @@
 5. [Sprint Final PPT](/Essays/Senior_Design_Slides.pdf)
 6. [Final Expo Poster](https://github.com/tranjtGCP/Internal-Home-Directory/blob/main/Design/Posterboard.pdf)
 7. Assessments
-   - [Initial Self Assessments](/Essays/Initial_Self_Assessments)
-   - [Final Self Assessments](/Essays/Final_Self_Assessments)
+   - [Initial Self Assessments](/Essays/Initial_Self_Assessment)
+   - [Final Self Assessments](/Essays/Final_Self_Assessment)
 8. [Summary of Hours](/Essays/Milestones_Timeline_Effort_Matrix.pdf)
 9. Summary of Expenses
     - Expenses to date: N/A. Only time developing software has been dedicated to this project.
