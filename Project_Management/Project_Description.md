@@ -5,4 +5,4 @@
 - Justin Tran (Computer Science), tranjt@mail.uc.edu
 
 ## Topic: 
-Our project is a home inventory system that is simple and deisnged for everyday home use. Items can be added and removed through the web interface, and can be easily searched and filtered through. Our hope is to reduce waste and gamify using items that the user already has.
+Our project is a simple home inventory system designed for everyday home use. Items can be added and removed through the web interface, and can be easily searched and filtered through. A server hosting a SQLite database is used for persistent storage. Our goal is to push users to reduce waste through gamification that encourages thoughtful consumption.
