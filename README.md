@@ -1,31 +1,18 @@
 ## Senior Design Project
 # **Table of Contents**
-### Justin Tran
+### Justin Tran, Reyna Kozel
 
-1. Team Names
-2. [Project Description](/Project_Management/Project_Description.md)
-3. User Stories and Design Diagrams
-    - [User Stories](/Design/User_Stories.md)
-    - Design Diagrams
-       - [Level 0](/Design/Design_Diagrams/Design_Diagram_1.png)
-       - [Level 1](/Design/Design_Diagrams/Design_Diagram_2.png)
-       - [Level 2](/Design/Design_Diagrams/Design_Diagram_3.png)
-    - [Descriptions of Diagrams](/Design/Design_Diagrams/Design_Diagrams_Summary.pdf)
-5. Project Tasks and Timeline
-    - [Task List](/Project_Management/Tasklist.md)
-    - [Timeline / Effort Matrix](/Essays/Milestones_Timeline_Effort_Matrix.pdf)
-6. [ABET Concerns](/Essays/Constraints_Essay.pdf) 
-7. [PPT Slideshow (including ABET Concerns)](/Essays/Senior_Design_Slides.pdf)
-8. Self-Assessment Essays
-    - [Rey](/Essays/Capstone_Essay_Rey.pdf)
-    - [Justin](/Essays/Capstone_Essay_Justin.pdf)
-10. Professional Biographies
-    - [Rey](/Professional_Biographies/Rey_Biography.md)
-    - [Justin](/Professional_Biographies/Justin_Biography.md)
-12. Budget
-    - Expenses to date / Statement that there have not been any:
-        - There have not been any expenses to date; only time has been dedicated.
-    - Monetary value of donated items and donation sources
-        - We have not received any donations and are using our own tools.
-13. Appendix
+1. [Project Description](/Project_Management/Project_Description.md)
+2. User Interface Specification
+3. Test Plan and Results
+4. [User Guide](https://github.com/tranjtGCP/Internal-Home-Directory/blob/main/Design/User%20Docs/User_Guide.md)
+5. [Sprint Final PPT](/Essays/Senior_Design_Slides.pdf)
+6. [Final Expo Poster](https://github.com/tranjtGCP/Internal-Home-Directory/blob/main/Design/Posterboard.pdf)
+7. Assessments
+   - [Initial Self Assessments](/Essays/Initial_Self_Assessments)
+   - [Final Self Assessments](/Essays/Final_Self_Assessments)
+8. [Summary of Hours](/Essays/Milestones_Timeline_Effort_Matrix.pdf)
+9. Summary of Expenses
+    - Expenses to date: N/A. Only time developing software has been dedicated to this project.
+10. Appendix
     - [Repository](https://github.com/tranjtGCP/Rey-Justin-Senior-Design-Project.git)
