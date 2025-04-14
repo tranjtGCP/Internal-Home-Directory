@@ -6,7 +6,7 @@
 2. User Interface Specification
 3. Test Plan and Results
 4. [User Guide](https://github.com/tranjtGCP/Internal-Home-Directory/blob/main/Design/User%20Docs/User_Guide.md)
-5. [Sprint Final PPT](/Essays/Senior_Design_Slides.pdf)
+5. [Spring Final PPT](/Essays/Senior_Design_Slides.pdf)
 6. [Final Expo Poster](https://github.com/tranjtGCP/Internal-Home-Directory/blob/main/Design/Posterboard.pdf)
 7. Assessments
    - [Initial Self Assessments](/Essays/Initial_Self_Assessment)
