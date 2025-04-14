@@ -5,9 +5,9 @@
 1. [Project Description](/Project_Management/Project_Description.md)
 2. User Interface Specification
 3. Test Plan and Results
-4. [User Guide](https://github.com/tranjtGCP/Internal-Home-Directory/blob/main/Design/User%20Docs/User_Guide.md)
-5. [Spring Final PPT](/Essays/Senior_Design_Slides.pdf)
-6. [Final Expo Poster](https://github.com/tranjtGCP/Internal-Home-Directory/blob/main/Design/Posterboard.pdf)
+4. [User Guide](/Design/User%20Docs/User_Guide.md)
+5. [Spring Final PPT](/Design/Senior_Design_Slides.pdf)
+6. [Final Expo Poster](/Design/Posterboard.pdf)
 7. Assessments
    - [Initial Self Assessments](/Essays/Initial_Self_Assessment)
    - [Final Self Assessments](/Essays/Final_Self_Assessment)
