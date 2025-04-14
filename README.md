@@ -11,7 +11,7 @@
 7. Assessments
    - [Initial Self Assessments](/Essays/Initial_Self_Assessment)
    - [Final Self Assessments](/Essays/Final_Self_Assessment)
-8. [Summary of Hours](/Essays/Milestones_Timeline_Effort_Matrix.pdf)
+8. [Summary of Hours](Project_Management/Time_Management)
 9. Summary of Expenses
     - Expenses to date: N/A. Only time developing software has been dedicated to this project.
 10. Appendix
