@@ -5,5 +5,6 @@ The database uses PyTest to run automated testing on the database IO functions. 
 Testing Ouput:
 ![image](https://github.com/user-attachments/assets/caa2d43a-a743-4953-bffe-c29711e7d23c)
 
-Sample Database:
-![image](https://github.com/user-attachments/assets/8e61b6c0-8cfd-4408-a503-91b563096b8c)
+Sample Database (25 items per page at 273 pages):
+![image](https://github.com/user-attachments/assets/b82892ad-5171-42d3-a06b-c7d83f8b6435)
+
