@@ -33,16 +33,17 @@ To run the server, navigate to the 'server' folder inside 'src' and execute 'ser
 
 
 ##### Using the application
-Upon launch, the user will be greeted to a landing page. The user will be prompted to "Sign Up" and create an account or "Log In" with an existing one.
-![image](https://github.com/user-attachments/assets/d5103995-dd47-4582-aef1-e4ac3426c2f1)
+Upon launch, the user will be greeted to a home page.This page contains lists of items that may be relevant to the user such as 'last modified' and 'highest quantity'. 
+![image](https://github.com/user-attachments/assets/54a30e57-4008-47b3-8cd8-25a788bfbe53)
 
-In either page, the user can fill out the corresponding information, and click the submit button to continue.
-![image](https://github.com/user-attachments/assets/888ad4bd-d31f-440d-8226-45da7bc64609)
-![image](https://github.com/user-attachments/assets/3b906b71-c2e2-437d-8905-3f5e67954b17)
+The user can navigate to the search page. Here, all of the items will be displayed in aplhabetical order in ascending order by default in pages. The user can filter by name, or filter by labels to narrow the search. The sorting method can also be selected and toggled between ascending and descending order.
+![image](https://github.com/user-attachments/assets/3ee2863b-8e11-4b02-a47c-2126c615e9fa)
 
-After the user has created their account or logged in, they will be greeted with the home page. On this home page, we have attempted to streamline how users' information is displayed. In hierarchical fashion starting from the innermost, items are listed in rooms, which are listed in buildings. Each level of storage is collapsible and editable. 
-![image](https://github.com/user-attachments/assets/b69a5910-0341-4950-8912-ae2cdf60f6d7)
+To add new items or modify existing items, the user can click on the 'ADD/EDIT ITEM' button in the top right corner which will open a dialog box. To add a new item, enter an item with a name that isn't currently in the database. To modify and item, enter the item name as it appears in the database with the updated values.
+![image](https://github.com/user-attachments/assets/d92d701e-693e-44f5-80e4-13d8f4804b88)
 
-At the top of the page, there is a search bar, that can search for all items in all levels. The user will be able to add items to rooms, rooms to buildings, and buildings as well. 
+To remove an item, the user can click on the 'REMOVE ITEM' button in the top right corner which will open a dialog box. To remove the item, enter the item name as it appears in the database.
+![image](https://github.com/user-attachments/assets/df88bbb3-8d99-44e0-8395-a22bc28aacc8)
 
-The user interface is still in development. We plan to implement sorting, different modes of input, and more features.
+On the main page, the use can also click the 'I'm Feeling Lucky' button at the top of the page to view 3 random items.
+![image](https://github.com/user-attachments/assets/bce48095-ed92-404c-99f4-5628ab04c56b)
